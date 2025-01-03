@@ -1,0 +1,236 @@
+import 'package:airbnbr/components/display_place.dart';
+import 'package:airbnbr/database/db.dart';
+import 'package:airbnbr/database/object_box_model/OBinit/MyObjectBox.dart';
+import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
+import 'package:airbnbr/database/object_box_model/entities/RoomOBModel.dart';
+import 'package:airbnbr/injection_containert.dart';
+import 'package:airbnbr/model/fav_room_model.dart';
+import 'package:airbnbr/model/room_model.dart';
+import 'package:airbnbr/model/user_login_model.dart';
+import 'package:airbnbr/model/user_register_email.dart';
+import 'package:airbnbr/provider/user_fav_room_provider.dart';
+import 'package:airbnbr/views/home/home_screen.dart';
+import 'package:airbnbr/views/home/reserveRoom/request_to_book.dart';
+import 'package:airbnbr/views/home/room_details.dart';
+import 'package:airbnbr/views/login/loginWithEmail.dart';
+import 'package:airbnbr/views/profile/userSettings/userSettings.dart';
+import 'package:airbnbr/views/register/registerContact.dart';
+import 'package:flutter/material.dart';
+import 'package:airbnbr/views/login/loginWithContact.dart';
+import 'package:airbnbr/views/register/registerEmail.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:objectbox/objectbox.dart';
+
+//late MyObjectBox objectBox;
+
+void main() async {
+  //Ensuring the user stays isLoggedIn after closing the app
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  String? userIdShareP = prefs.getString('token');
+  String? userEmailShareP = prefs.getString('token_user_email');
+
+  //ObejctBox
+  //objectBox = await MyObjectBox.init();
+
+  //ObjectBox injection
+  //setupLocator();
+
+  //await setupLocator();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => FavRoomsScreenProvider(),
+      child: MyApp(
+        isLoggedIn: isLoggedIn,
+        userIdMyApp: userIdShareP,
+        userEmailSMyApp: userEmailShareP,
+      ),
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
+  final bool isLoggedIn;
+  final String? userIdMyApp;
+  final String? userEmailSMyApp;
+
+  const MyApp(
+      {super.key,
+      required this.isLoggedIn,
+      this.userIdMyApp,
+      this.userEmailSMyApp});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MyRouter(
+      isLoggedIn: widget.isLoggedIn,
+      userIdRouter: widget.userIdMyApp,
+      userEmailRouter: widget.userEmailSMyApp,
+    );
+  }
+}
+
+class MyRouter extends StatefulWidget {
+  final bool isLoggedIn;
+  final String? userIdRouter;
+  final String? userEmailRouter;
+
+  const MyRouter({
+    super.key,
+    required this.isLoggedIn,
+    this.userIdRouter,
+    this.userEmailRouter,
+  });
+
+  @override
+  State<MyRouter> createState() => _MyRouterState();
+}
+
+class _MyRouterState extends State<MyRouter> {
+  late final GoRouter router;
+
+  @override
+  void initState() {
+    super.initState();
+    print(
+        'Main Router initState: isLoggedIn=${widget.isLoggedIn}, userIdRouter=${widget.userIdRouter}, userEmailRouter=${widget.userEmailRouter}');
+
+    router = GoRouter(
+      initialLocation: widget.isLoggedIn &&
+              (widget.userIdRouter != null || widget.userEmailRouter != null)
+          ? '/home_screen'
+          : '/login_with_contact',
+      routes: [
+        GoRoute(
+          path: "/login_with_contact",
+          pageBuilder: (context, state) {
+            final String? contact = state.uri.queryParameters['contact'];
+            return MaterialPage(child: LoginWithContact(userContact: contact));
+          },
+        ),
+        GoRoute(
+          path: "/login_with_gmail",
+          pageBuilder: (context, state) {
+            final String? email = state.uri.queryParameters['email'];
+            return MaterialPage(child: LoginWithEmail(email: email));
+          },
+        ),
+        GoRoute(
+          path: "/registerWithEmail",
+          pageBuilder: (context, state) {
+            final userLoginEmail = state.extra as String;
+            return MaterialPage(
+              child: RegisterWithEmail(email: userLoginEmail),
+            );
+          },
+        ),
+        GoRoute(
+          path: "/registerWithContact",
+          pageBuilder: (context, state) {
+            final userLoginContact = state.extra as String;
+            return MaterialPage(
+              child: RegisterWithContactCont(contact: userLoginContact),
+            );
+          },
+        ),
+        GoRoute(
+          path: "/home_screen",
+          pageBuilder: (context, state) {
+            //ObjectBox
+            //Stream<List<User>> streamUser = objectBox.getUsers();
+            //Stream<List<RoomOB>> streamRooms = objectBox.getRooms();
+
+            final userIdFromLogin = state.extra as String?;
+            //which id to use when is logged in (contact or email)
+            String? unsureUserID = '';
+
+            if (widget.userIdRouter != null) {
+              unsureUserID = widget.userIdRouter;
+            } else if (widget.userEmailRouter != null) {
+              unsureUserID = widget.userEmailRouter;
+            }
+            final userId = widget.isLoggedIn && unsureUserID != null
+                ? unsureUserID
+                : userIdFromLogin;
+            print('Main userIdFromLogin : ${userIdFromLogin}');
+            print('Main MyRouter User_ID?: ${userId}');
+
+            if (userId == null) {
+              print('Main Error: userId is null');
+              return const MaterialPage(
+                child: const LoginWithContact(userContact: null),
+              );
+            }
+            print('Main MyRouter User_ID?: ${userId}');
+            return MaterialPage(
+              child: HomeScreen(userId: userId),
+            );
+          },
+        ),
+        GoRoute(
+          path: "/room_details",
+          pageBuilder: (context, state) {
+            final room = state.extra as Room;
+            //final room = state.extra as FavRoom;
+            final userId = state.uri.queryParameters['userId'];
+            return MaterialPage(
+              child: RoomDetails(
+                room: room,
+                userId: userId,
+              ),
+            );
+          },
+        ),
+        GoRoute(
+          path: "/request_to_book",
+          pageBuilder: (context, state) {
+            final userID = state.uri.queryParameters['userId'];
+            final room = state.extra as Room;
+            return MaterialPage(
+              child: RequestToBook(
+                userID: userID,
+                room: room,
+              ),
+            );
+          },
+        ),
+        GoRoute(
+          path: "/user_settings",
+          pageBuilder: (context, state) {
+            //final userID = state.uri.queryParameters['userId'];
+            //final room = state.extra as Room;
+            return const MaterialPage(
+              child: UserSettings(),
+            );
+          },
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //final roomApi = RoomApi(objectBox);
+
+    return Material(
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: "Airbnb",
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routerConfig: router,
+      ),
+    );
+  }
+}
