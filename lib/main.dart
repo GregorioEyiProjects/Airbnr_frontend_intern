@@ -6,6 +6,7 @@ import 'package:airbnbr/database/object_box_model/OBinit/MyObjectBox.dart';
 import 'package:airbnbr/injection_containert.dart';
 //import 'package:airbnbr/model/fav_room_model.dart';
 import 'package:airbnbr/model/room_model.dart';
+import 'package:airbnbr/provider/roomProvider.dart';
 //import 'package:airbnbr/model/user_login_model.dart';
 //import 'package:airbnbr/model/user_register_email.dart';
 import 'package:airbnbr/provider/user_fav_room_provider.dart';
@@ -46,10 +47,18 @@ void main() async {
   //Initialize the GetIt locator, which will be used to inject the RoomApi
   await setupLocator(objectBoxdb);
 
+  //Get all rooms from the database
+  RoomApi roomApi = locator<RoomApi>();
+  List<Room> listOfRooms = await roomApi.fetchAllRoom();
+
+  ////To copy the list of room to the provider to be used in the app
+  /// create: (context) => Roomprovider()..addRooms(listOfRooms)
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => FavRoomsScreenProvider()),
+        ChangeNotifierProvider(
+            create: (context) => RoomProvider()..addRooms(listOfRooms)),
         Provider<Objectboxdb>.value(value: objectBoxdb),
         Provider<RoomApi>(create: (context) => locator<RoomApi>()),
       ],

@@ -1,4 +1,4 @@
-import 'package:airbnbr/database/object_box_model/entities/Location_O_Box.dart';
+import 'package:airbnbr/database/object_box_model/entities/RoomLocationOBModel.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -6,10 +6,10 @@ import 'package:path_provider/path_provider.dart';
 class RoomOB {
   @Id(assignable: true)
   int? id; // Unique ID for Room
-  String mongoRoomId;
+  String mongoRoomId; // Unique ID from MongoDB
   String name;
   double price;
-  double? rating;
+  double rating;
   int bedNumbers;
   int? reviewNumbers;
   List<String> roomImages;
@@ -17,13 +17,20 @@ class RoomOB {
   int yearsHosting;
   String vendorProfession;
   String authorImage;
-  String locationName;
-  DateTime date;
-  bool isActive;
-  String? description;
+  String city;
+  String date;
+  bool active;
+  String description;
   // In ObjectBox, you can store the location data as a ToOne<Location>
-  final localtionData = ToOne<LocationOB>();
-
+  final localtionData = ToOne<RoomLocationOB>();
+  DateTime avaibleStartTime;
+  DateTime avaibleEndTime;
+  String stayFor;
+  String stayOn;
+  bool petsAllowed;
+  int maxAdults;
+  int maxChildren;
+  int maxInfants;
   //String hostId; // In ObjectBox, you can store the host's ID as a String
 
   RoomOB({
@@ -31,7 +38,7 @@ class RoomOB {
     required this.mongoRoomId,
     required this.name,
     required this.price,
-    this.rating,
+    required this.rating,
     required this.bedNumbers,
     this.reviewNumbers,
     required this.roomImages,
@@ -39,17 +46,34 @@ class RoomOB {
     required this.yearsHosting,
     required this.vendorProfession,
     required this.authorImage,
-    required this.locationName,
-    required this.isActive,
-    this.description,
+    required this.city,
     required this.date,
+    required this.active,
+    required this.description,
+    required this.avaibleStartTime,
+    required this.avaibleEndTime,
+    required this.stayFor,
+    required this.stayOn,
+    required this.petsAllowed,
+    required this.maxAdults,
+    required this.maxChildren,
+    required this.maxInfants,
   });
 
-// Factory method to create a Room from JSON
   factory RoomOB.fromJson(
-      Map<String, dynamic> json, Box<LocationOB> locationBox) {
+      Map<String, dynamic> json, Box<RoomLocationOB> locationBox) {
+    // Parse the available start and end time
+    final availableStartTime = json['data']['avaibility']?['startTime'] != null
+        ? DateTime.tryParse(json['data']['avaibility']['startTime'])
+        : DateTime(1970); // Default or fallback value
+    final availableEndTime = json['data']['avaibility']?['endTime'] != null
+        ? DateTime.tryParse(json['data']['avaibility']['endTime'])
+        : DateTime(1970); // Default or fallback value
+
     final locations = json['data']['locations'] ?? {};
-    final location = LocationOB(
+    final availbleStart = json['data']['avaibility']['startTime'] ?? '';
+    final availbleEnd = json['data']['avaibility']['endTime'] ?? '';
+    final location = RoomLocationOB(
       mongoRoomId: json['_id'] ?? 'Unnamed id',
       latitude: locations['latitude'] != null
           ? (locations['latitude'] as num).toDouble()
@@ -59,7 +83,8 @@ class RoomOB {
           : 0.0, // Safely parse longitude
     );
 
-    // Save the location to ObjectBox
+    // Save the location to ObjectBox before creating the room cus
+    // the room will need the location to be saved in the database before it can be linked to it
     locationBox.put(location);
 
     final room = RoomOB(
@@ -79,10 +104,18 @@ class RoomOB {
       yearsHosting: json['data']['yearsHosting'] ?? 0,
       vendorProfession: json['data']['vendorProfession'] ?? '',
       authorImage: json['data']['authorImage'] ?? '',
-      locationName: json['data']['location'] ?? '',
+      city: json['data']['location'] ?? '',
       date: json['data']['date'] ?? '',
-      isActive: json['data']['isActive'] ?? false,
+      active: json['data']['active'] ?? false,
       description: json['data']['description'] ?? '',
+      avaibleStartTime: availableStartTime ?? DateTime(1970),
+      avaibleEndTime: availableEndTime ?? DateTime(1970),
+      stayFor: json['data']['stayFor'] ?? 'Weekend',
+      stayOn: json['data']['stayOn'] ?? 'Anytime',
+      petsAllowed: json['data']['petsAllowed'] ?? false,
+      maxAdults: json['data']['maxAdults'] ?? 0,
+      maxChildren: json['data']['maxChildren'] ?? 0,
+      maxInfants: json['data']['maxInfants'] ?? 0,
     );
 
     room.localtionData.target = location; // Link the location to the room

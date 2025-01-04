@@ -14,7 +14,7 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'database/object_box_model/entities/Location_O_Box.dart';
+import 'database/object_box_model/entities/RoomLocationOBModel.dart';
 import 'database/object_box_model/entities/RoomOBModel.dart';
 import 'database/object_box_model/entities/UserOBModel.dart';
 import 'database/object_box_model/entities/userFavRooms.dart';
@@ -25,7 +25,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(5, 7747724712943564244),
       name: 'RoomOB',
-      lastPropertyId: const obx_int.IdUid(17, 8753780195802096363),
+      lastPropertyId: const obx_int.IdUid(27, 5628587812979705812),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -84,19 +84,9 @@ final _entities = <obx_int.ModelEntity>[
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 3219077870239713468),
-            name: 'locationName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
             id: const obx_int.IdUid(13, 8142282418440620282),
             name: 'date',
-            type: 10,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(14, 6230735350825289298),
-            name: 'isActive',
-            type: 1,
+            type: 9,
             flags: 0),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(15, 5846027037057264242),
@@ -109,11 +99,61 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(2, 2627266253664584719),
-            relationTarget: 'LocationOB'),
+            relationTarget: 'RoomLocationOB'),
         obx_int.ModelProperty(
             id: const obx_int.IdUid(17, 8753780195802096363),
             name: 'mongoRoomId',
             type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 3721173426345892645),
+            name: 'city',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(19, 4530169160535872365),
+            name: 'active',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(20, 1269219155787807767),
+            name: 'avaibleStartTime',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(21, 8454935592229227112),
+            name: 'avaibleEndTime',
+            type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(22, 773147041116942381),
+            name: 'stayFor',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(23, 1699302663051247313),
+            name: 'stayOn',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(24, 1927341894056080605),
+            name: 'petsAllowed',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(25, 1342325527089518447),
+            name: 'maxAdults',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(26, 941954933341279644),
+            name: 'maxChildren',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(27, 5628587812979705812),
+            name: 'maxInfants',
+            type: 6,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -217,28 +257,28 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(9, 7875067583487514368),
-      name: 'LocationOB',
-      lastPropertyId: const obx_int.IdUid(4, 6131584352045644398),
+      id: const obx_int.IdUid(10, 5258587046230845498),
+      name: 'RoomLocationOB',
+      lastPropertyId: const obx_int.IdUid(4, 8241922314698725244),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 6190401330312554562),
+            id: const obx_int.IdUid(1, 7585943375898796757),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7006921639940840456),
+            id: const obx_int.IdUid(2, 3357350098574376592),
             name: 'mongoRoomId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 4139100330091928160),
+            id: const obx_int.IdUid(3, 6852145392933272982),
             name: 'latitude',
             type: 8,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6131584352045644398),
+            id: const obx_int.IdUid(4, 8241922314698725244),
             name: 'longitude',
             type: 8,
             flags: 0)
@@ -282,7 +322,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(9, 7875067583487514368),
+      lastEntityId: const obx_int.IdUid(10, 5258587046230845498),
       lastIndexId: const obx_int.IdUid(2, 2627266253664584719),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -291,7 +331,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
         7202278025822394323,
         3463601388008821113,
         2663420647659323758,
-        6981604499755645924
+        6981604499755645924,
+        7875067583487514368
       ],
       retiredIndexUids: const [],
       retiredPropertyUids: const [
@@ -340,7 +381,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
         6314156896850207743,
         3099677569853995082,
         6300693485986529242,
-        2196674909696025177
+        2196674909696025177,
+        3219077870239713468,
+        6230735350825289298,
+        6190401330312554562,
+        7006921639940840456,
+        4139100330091928160,
+        6131584352045644398
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -364,12 +411,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final vendorProfessionOffset =
               fbb.writeString(object.vendorProfession);
           final authorImageOffset = fbb.writeString(object.authorImage);
-          final locationNameOffset = fbb.writeString(object.locationName);
-          final descriptionOffset = object.description == null
-              ? null
-              : fbb.writeString(object.description!);
+          final dateOffset = fbb.writeString(object.date);
+          final descriptionOffset = fbb.writeString(object.description);
           final mongoRoomIdOffset = fbb.writeString(object.mongoRoomId);
-          fbb.startTable(18);
+          final cityOffset = fbb.writeString(object.city);
+          final stayForOffset = fbb.writeString(object.stayFor);
+          final stayOnOffset = fbb.writeString(object.stayOn);
+          fbb.startTable(28);
           fbb.addInt64(0, object.id ?? 0);
           fbb.addOffset(1, nameOffset);
           fbb.addFloat64(2, object.price);
@@ -381,12 +429,20 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addInt64(8, object.yearsHosting);
           fbb.addOffset(9, vendorProfessionOffset);
           fbb.addOffset(10, authorImageOffset);
-          fbb.addOffset(11, locationNameOffset);
-          fbb.addInt64(12, object.date.millisecondsSinceEpoch);
-          fbb.addBool(13, object.isActive);
+          fbb.addOffset(12, dateOffset);
           fbb.addOffset(14, descriptionOffset);
           fbb.addInt64(15, object.localtionData.targetId);
           fbb.addOffset(16, mongoRoomIdOffset);
+          fbb.addOffset(17, cityOffset);
+          fbb.addBool(18, object.active);
+          fbb.addInt64(19, object.avaibleStartTime.millisecondsSinceEpoch);
+          fbb.addInt64(20, object.avaibleEndTime.millisecondsSinceEpoch);
+          fbb.addOffset(21, stayForOffset);
+          fbb.addOffset(22, stayOnOffset);
+          fbb.addBool(23, object.petsAllowed);
+          fbb.addInt64(24, object.maxAdults);
+          fbb.addInt64(25, object.maxChildren);
+          fbb.addInt64(26, object.maxInfants);
           fbb.finish(fbb.endTable());
           return object.id ?? 0;
         },
@@ -402,8 +458,8 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGet(buffer, rootOffset, 6, '');
           final priceParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          final ratingParam = const fb.Float64Reader()
-              .vTableGetNullable(buffer, rootOffset, 10);
+          final ratingParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
           final bedNumbersParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final reviewNumbersParam =
@@ -422,16 +478,31 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final authorImageParam =
               const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 24, '');
-          final locationNameParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 26, '');
-          final isActiveParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 30, false);
+          final cityParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 38, '');
+          final dateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 28, '');
+          final activeParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 32);
-          final dateParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0));
+                  .vTableGet(buffer, rootOffset, 32, '');
+          final avaibleStartTimeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0));
+          final avaibleEndTimeParam = DateTime.fromMillisecondsSinceEpoch(
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0));
+          final stayForParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 46, '');
+          final stayOnParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 48, '');
+          final petsAllowedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 50, false);
+          final maxAdultsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+          final maxChildrenParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
+          final maxInfantsParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
           final object = RoomOB(
               id: idParam,
               mongoRoomId: mongoRoomIdParam,
@@ -445,10 +516,18 @@ obx_int.ModelDefinition getObjectBoxModel() {
               yearsHosting: yearsHostingParam,
               vendorProfession: vendorProfessionParam,
               authorImage: authorImageParam,
-              locationName: locationNameParam,
-              isActive: isActiveParam,
+              city: cityParam,
+              date: dateParam,
+              active: activeParam,
               description: descriptionParam,
-              date: dateParam);
+              avaibleStartTime: avaibleStartTimeParam,
+              avaibleEndTime: avaibleEndTimeParam,
+              stayFor: stayForParam,
+              stayOn: stayOnParam,
+              petsAllowed: petsAllowedParam,
+              maxAdults: maxAdultsParam,
+              maxChildren: maxChildrenParam,
+              maxInfants: maxInfantsParam);
           object.localtionData.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
           object.localtionData.attach(store);
@@ -570,15 +649,15 @@ obx_int.ModelDefinition getObjectBoxModel() {
 
           return object;
         }),
-    LocationOB: obx_int.EntityDefinition<LocationOB>(
+    RoomLocationOB: obx_int.EntityDefinition<RoomLocationOB>(
         model: _entities[3],
-        toOneRelations: (LocationOB object) => [],
-        toManyRelations: (LocationOB object) => {},
-        getId: (LocationOB object) => object.id,
-        setId: (LocationOB object, int id) {
+        toOneRelations: (RoomLocationOB object) => [],
+        toManyRelations: (RoomLocationOB object) => {},
+        getId: (RoomLocationOB object) => object.id,
+        setId: (RoomLocationOB object, int id) {
           object.id = id;
         },
-        objectToFB: (LocationOB object, fb.Builder fbb) {
+        objectToFB: (RoomLocationOB object, fb.Builder fbb) {
           final mongoRoomIdOffset = fbb.writeString(object.mongoRoomId);
           fbb.startTable(5);
           fbb.addInt64(0, object.id ?? 0);
@@ -600,7 +679,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final longitudeParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          final object = LocationOB(
+          final object = RoomLocationOB(
               id: idParam,
               mongoRoomId: mongoRoomIdParam,
               latitude: latitudeParam,
@@ -659,29 +738,61 @@ class RoomOB_ {
   static final authorImage =
       obx.QueryStringProperty<RoomOB>(_entities[0].properties[10]);
 
-  /// See [RoomOB.locationName].
-  static final locationName =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[11]);
-
   /// See [RoomOB.date].
   static final date =
-      obx.QueryDateProperty<RoomOB>(_entities[0].properties[12]);
-
-  /// See [RoomOB.isActive].
-  static final isActive =
-      obx.QueryBooleanProperty<RoomOB>(_entities[0].properties[13]);
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[11]);
 
   /// See [RoomOB.description].
   static final description =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[14]);
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[12]);
 
   /// See [RoomOB.localtionData].
-  static final localtionData =
-      obx.QueryRelationToOne<RoomOB, LocationOB>(_entities[0].properties[15]);
+  static final localtionData = obx.QueryRelationToOne<RoomOB, RoomLocationOB>(
+      _entities[0].properties[13]);
 
   /// See [RoomOB.mongoRoomId].
   static final mongoRoomId =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[16]);
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[14]);
+
+  /// See [RoomOB.city].
+  static final city =
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[15]);
+
+  /// See [RoomOB.active].
+  static final active =
+      obx.QueryBooleanProperty<RoomOB>(_entities[0].properties[16]);
+
+  /// See [RoomOB.avaibleStartTime].
+  static final avaibleStartTime =
+      obx.QueryDateProperty<RoomOB>(_entities[0].properties[17]);
+
+  /// See [RoomOB.avaibleEndTime].
+  static final avaibleEndTime =
+      obx.QueryDateProperty<RoomOB>(_entities[0].properties[18]);
+
+  /// See [RoomOB.stayFor].
+  static final stayFor =
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[19]);
+
+  /// See [RoomOB.stayOn].
+  static final stayOn =
+      obx.QueryStringProperty<RoomOB>(_entities[0].properties[20]);
+
+  /// See [RoomOB.petsAllowed].
+  static final petsAllowed =
+      obx.QueryBooleanProperty<RoomOB>(_entities[0].properties[21]);
+
+  /// See [RoomOB.maxAdults].
+  static final maxAdults =
+      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[22]);
+
+  /// See [RoomOB.maxChildren].
+  static final maxChildren =
+      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[23]);
+
+  /// See [RoomOB.maxInfants].
+  static final maxInfants =
+      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[24]);
 }
 
 /// [UserFavoriteRooms] entity fields to define ObjectBox queries.
@@ -754,21 +865,21 @@ class UserOB_ {
       obx.QueryDateProperty<UserOB>(_entities[2].properties[11]);
 }
 
-/// [LocationOB] entity fields to define ObjectBox queries.
-class LocationOB_ {
-  /// See [LocationOB.id].
+/// [RoomLocationOB] entity fields to define ObjectBox queries.
+class RoomLocationOB_ {
+  /// See [RoomLocationOB.id].
   static final id =
-      obx.QueryIntegerProperty<LocationOB>(_entities[3].properties[0]);
+      obx.QueryIntegerProperty<RoomLocationOB>(_entities[3].properties[0]);
 
-  /// See [LocationOB.mongoRoomId].
+  /// See [RoomLocationOB.mongoRoomId].
   static final mongoRoomId =
-      obx.QueryStringProperty<LocationOB>(_entities[3].properties[1]);
+      obx.QueryStringProperty<RoomLocationOB>(_entities[3].properties[1]);
 
-  /// See [LocationOB.latitude].
+  /// See [RoomLocationOB.latitude].
   static final latitude =
-      obx.QueryDoubleProperty<LocationOB>(_entities[3].properties[2]);
+      obx.QueryDoubleProperty<RoomLocationOB>(_entities[3].properties[2]);
 
-  /// See [LocationOB.longitude].
+  /// See [RoomLocationOB.longitude].
   static final longitude =
-      obx.QueryDoubleProperty<LocationOB>(_entities[3].properties[3]);
+      obx.QueryDoubleProperty<RoomLocationOB>(_entities[3].properties[3]);
 }

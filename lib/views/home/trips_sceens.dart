@@ -62,9 +62,9 @@ class RoomListScreen extends StatelessWidget {
                   DataCell(Text(room.yearsHosting.toString())),
                   DataCell(Text(room.vendorProfession)),
                   DataCell(Text(room.authorImage)),
-                  DataCell(Text(room.locationName)),
+                  DataCell(Text(room.city)),
                   DataCell(Text(room.date.toString())),
-                  DataCell(Text(room.isActive ? 'Yes' : 'No')),
+                  DataCell(Text(room.active ? 'Yes' : 'No')),
                   DataCell(Text(room.description ?? 'N/A')),
                   DataCell(Text(
                       room.localtionData.target?.latitude.toString() ?? 'N/A')),

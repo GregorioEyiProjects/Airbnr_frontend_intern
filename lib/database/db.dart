@@ -394,7 +394,101 @@ class RoomApi {
 // ----------------- API Calls -----------------
   // Fetch rooms data from the API
 
-  /*  Future<List<RoomOB>> fetchAllRooms() async {
+  Future<List<Room>> fetchAllRoom() async {
+    print('API url: ${apiUrlrooms}');
+    final response = await http.get(Uri.parse(apiUrlrooms));
+    print('All: ${response.body}'); // Check what data you're getting
+
+    if (response.statusCode == 200) {
+      //List<dynamic> jsonResponse = jsonDecode(response.body);
+      final jsonResponse = jsonDecode(response.body) as List<dynamic>;
+      print('DB - fetchAllRoom jsonResponse: $jsonResponse');
+
+      // Get the room data from the jsonResponse and convert it to a list of Room objects
+      final rooms =
+          jsonResponse.map((roomJson) => Room.fromJson(roomJson)).toList();
+
+      //create a room object to be inserted in the ObjectBox
+      Store store = objectboxdb.store;
+
+      //Get the existing roomsId from the ObjectBox and converting them to a Set
+      final existingRooms = objectboxdb.store
+          .box<RoomOB>()
+          .getAll()
+          .map((room) => room.mongoRoomId)
+          .toSet();
+
+      // runInTransaction: It ensures atomicity, consistency, and efficiency for multiple database operations.
+      // TxMode.write is used for transactions that modify the database.
+      store.runInTransaction(TxMode.write, () {
+        //Check if the room already exists in the ObjectBox
+        for (var room in rooms) {
+          if (!existingRooms.contains(room.id)) {
+            print(
+                "DB fetchAllRoom - No rooms yet, so inserting in the ObjectBox room with ID: ${room.id}");
+            //Ceate a room
+            final roomOB = RoomOB(
+              mongoRoomId: room.id,
+              name: room.name,
+              price: room.price,
+              rating: room.rating,
+              bedNumbers: room.bedNumbers,
+              reviewNumbers: room.reviewNumbers,
+              roomImages: room.roomImages,
+              vendorName: room.vendorName,
+              yearsHosting: room.yearsHosting,
+              vendorProfession: room.vendorProfession,
+              authorImage: room.authorImage,
+              city: room.city,
+              date: room.date,
+              active: room.active,
+              description: room.description,
+              avaibleStartTime:
+                  room.availability['startTime'] ?? DateTime(1970),
+              avaibleEndTime: room.availability['endTime'] ?? DateTime(1970),
+              stayFor: room.stayFor,
+              stayOn: room.stayOn,
+              petsAllowed: room.petsAllowed,
+              maxAdults: room.maxAdults,
+              maxChildren: room.maxChildren,
+              maxInfants: room.maxInfants,
+            );
+
+            //Insert the room in the ObjectBox
+            final id = store.box<RoomOB>().put(roomOB);
+            print('DB fetchAllRoom - room inserted in ObjectBox with ID: $id');
+          } else {
+            print(
+                'DB  fetchAllRoom - room already exists in the ObjectBox and the mongoRoomId is: ${room.id}');
+          }
+        }
+      });
+
+      //Checking if the there is data in the ObjectBox
+      //final existingRooms = await box.getRooms().first; // it returns a list
+      //final existingRoomIds = existingRooms.map((room) => room.mongoRoomId).toSet();
+
+      // Add data to the  ObjectBox
+      /*  for (var roomJson in jsonResponse) {
+        //
+        final room = Room.fromJson(roomJson); // room to compare
+        //final roomOB = RoomOB.fromJson(roomJson, box.locationBox); // room to insert
+        if (existingRoomIds.contains(room.id)) {
+          debugPrint('Room already exists in the ObjectBox');
+        } else {
+          //await box.insertRoom(roomOB);
+        }
+      } */
+
+      //print("BD rooms coming from LOCAL DEVIDE ${box.getRooms()}");
+
+      return jsonResponse.map((roomJson) => Room.fromJson(roomJson)).toList();
+    } else {
+      throw Exception('Failed to load rooms');
+    }
+  }
+
+  /*  Future<List<RoomOB>> fetchAllRooms2() async {
     print('Fetching data...');
     // Simulate a fetch
     print('API url: ${apiUrlrooms}');
@@ -420,38 +514,6 @@ class RoomApi {
       throw Exception('Failed to load rooms');
     }
   } */
-
-  Future<List<Room>> fetchAllRooms2() async {
-    print('API url: ${apiUrlrooms}');
-    final response = await http.get(Uri.parse(apiUrlrooms));
-    print('All: ${response.body}'); // Check what data you're gettingß
-
-    if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = jsonDecode(response.body);
-
-      //Checking if the there is data in the ObjectBox
-      //final existingRooms = await box.getRooms().first; // it returns a list
-      //final existingRoomIds = existingRooms.map((room) => room.mongoRoomId).toSet();
-
-      // Add data to the  ObjectBox
-      /*  for (var roomJson in jsonResponse) {
-        //
-        final room = Room.fromJson(roomJson); // room to compare
-        //final roomOB = RoomOB.fromJson(roomJson, box.locationBox); // room to insert
-        if (existingRoomIds.contains(room.id)) {
-          debugPrint('Room already exists in the ObjectBox');
-        } else {
-          //await box.insertRoom(roomOB);
-        }
-      } */
-
-      //print("BD rooms coming from LOCAL DEVIDE ${box.getRooms()}");
-
-      return jsonResponse.map((roomJson) => Room.fromJson(roomJson)).toList();
-    } else {
-      throw Exception('Failed to load rooms');
-    }
-  }
 
 //Used in DisplayPlace.dart
   Future<void> addFavRoomToDB(String userId, String roomId, context) async {

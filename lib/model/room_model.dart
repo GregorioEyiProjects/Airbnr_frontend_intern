@@ -10,11 +10,21 @@ class Room {
   final int yearsHosting;
   final String vendorProfession;
   final String authorImage;
-  final String location;
+  final String city;
+  final String continent;
   final String date;
-  final bool isActive;
+  final bool active;
   final String description;
   final Map<String, double> locations;
+  final Map<String, DateTime?> availability;
+  //final DateTime avaibleStartTime;
+  //final DateTime avaibleEndTime;
+  final String stayFor;
+  final String stayOn;
+  final bool petsAllowed;
+  final int maxAdults;
+  final int maxChildren;
+  final int maxInfants;
 
   // Constructor
   Room({
@@ -29,16 +39,33 @@ class Room {
     required this.yearsHosting,
     required this.vendorProfession,
     required this.authorImage,
-    required this.location,
+    required this.city,
+    required this.continent,
     required this.date,
-    required this.isActive,
+    required this.active,
     required this.description,
     required this.locations,
+    required this.availability,
+    //required this.avaibleStartTime,
+    //required this.avaibleEndTime,
+    required this.stayFor,
+    required this.stayOn,
+    required this.petsAllowed,
+    required this.maxAdults,
+    required this.maxChildren,
+    required this.maxInfants,
   });
 
-  // Factory method to create a Room from JSON
+  // Factory method to createJSON from the room values
   factory Room.fromJson(Map<String, dynamic> json) {
     final locations = json['data']['locations'] ?? {};
+    final avaibilityValue = json['data']['avaibility'] ?? {};
+    final startTime = avaibilityValue['startTime'] != null
+        ? DateTime.tryParse(avaibilityValue['startTime'])
+        : null;
+    final endTime = avaibilityValue['endTime'] != null
+        ? DateTime.tryParse(avaibilityValue['endTime'])
+        : null;
     return Room(
       id: json['_id'] ?? 'Unnamed id',
       name: json['data']['name'] ?? '',
@@ -55,9 +82,10 @@ class Room {
       yearsHosting: json['data']['yearsHosting'] ?? 0,
       vendorProfession: json['data']['vendorProfession'] ?? '',
       authorImage: json['data']['authorImage'] ?? '',
-      location: json['data']['location'] ?? '',
+      city: json['data']['location'] ?? '',
+      continent: json['data']['continent'] ?? '',
       date: json['data']['date'] ?? '',
-      isActive: json['data']['isActive'] ?? false,
+      active: json['data']['active'] ?? false,
       description: json['data']['description'] ?? '',
       locations: {
         'latitude': (locations['latitude'] != null
@@ -67,41 +95,16 @@ class Room {
             ? (locations['longitude'] as num).toDouble()
             : 0.0),
       },
-    );
-  }
-
-  factory Room.fromJson2(Map<String, dynamic> json) {
-    // Accessing the nested room data
-    var roomData = json['room']['data']; // Accessing the nested 'data' object
-
-    return Room(
-      id: json['_id'] ?? 'Unnamed id',
-      name: roomData['name'] ?? '',
-      price: roomData['price'] != null
-          ? (roomData['price'] as num).toDouble()
-          : 0.0,
-      rating: roomData['rating'] != null
-          ? (roomData['rating'] as num).toDouble()
-          : 0.0,
-      bedNumbers: roomData['bedNumbers'] ?? 0,
-      reviewNumbers: roomData['reviewNumbers'] ?? 0,
-      roomImages: List<String>.from(roomData['roomImages'] ?? []),
-      vendorName: roomData['vendorName'] ?? '',
-      yearsHosting: roomData['yearsHosting'] ?? 0,
-      vendorProfession: roomData['vendorProfession'] ?? '',
-      authorImage: roomData['authorImage'] ?? '',
-      location: roomData['location'] ?? '',
-      date: roomData['date'] ?? '',
-      isActive: roomData['active'] ?? false,
-      description: roomData['description'] ?? '',
-      locations: {
-        'latitude': (roomData['locations']['latitude'] != null
-            ? (roomData['locations']['latitude'] as num).toDouble()
-            : 0.0),
-        'longitude': (roomData['locations']['longitude'] != null
-            ? (roomData['locations']['longitude'] as num).toDouble()
-            : 0.0),
+      availability: {
+        "startTime": startTime ?? DateTime(1970),
+        "endTime": endTime ?? DateTime(1970),
       },
+      stayFor: json['data']['stayFor'] ?? 'Weekend',
+      stayOn: json['data']['stayOn'] ?? 'Anytime',
+      petsAllowed: json['data']['petsAllowed'] ?? false,
+      maxAdults: json['data']['maxAdults'] ?? 0,
+      maxChildren: json['data']['maxChildren'] ?? 0,
+      maxInfants: json['data']['maxInfants'] ?? 0,
     );
   }
 
@@ -119,11 +122,19 @@ class Room {
       'yearsHosting': yearsHosting,
       'vendorProfession': vendorProfession,
       'authorImage': authorImage,
-      'location': location,
+      'location': city,
+      'continent': continent,
       'date': date,
-      'active': isActive,
+      'active': active,
       'description': description,
       'locations': locations,
+      'avaibility': availability,
+      'stayFor': stayFor,
+      'stayOn': stayOn,
+      'petsAllowed': petsAllowed,
+      'maxAdults': maxAdults,
+      'maxChildren': maxChildren,
+      'maxInfants': maxInfants,
     };
   }
 }

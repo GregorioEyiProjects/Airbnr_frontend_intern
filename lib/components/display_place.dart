@@ -5,6 +5,7 @@ import 'package:airbnbr/injection_containert.dart';
 import 'package:airbnbr/model/fav_room_model.dart';
 import 'package:airbnbr/model/room_model.dart';
 import 'package:airbnbr/model/user_login_model.dart';
+import 'package:airbnbr/provider/roomProvider.dart';
 import 'package:airbnbr/provider/user_fav_room_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -65,10 +66,12 @@ class _DisplayPlaceState extends State<DisplayPlace> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final provider = Provider.of<FavRoomsScreenProvider>(context);
+    //Get the providers
+    final favRoomProvider = Provider.of<FavRoomsScreenProvider>(context);
+    final roomProvider = Provider.of<RoomProvider>(context);
 
     return FutureBuilder(
-      future: roomApi.fetchAllRooms2(),
+      future: Future.value(roomProvider.rooms), //roomApi.fetchAllRoom(),
       builder: (context, snapshot) {
         print('Snapshot state: ${snapshot.connectionState}');
 
@@ -139,8 +142,13 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                             ),
 
                             //FavoriteGuess container
-                            _favoriteGuessContainer(room, context, provider,
-                                widget.userId, isFavorite, isUserRoom),
+                            _favoriteGuessContainer(
+                                room,
+                                context,
+                                favRoomProvider,
+                                widget.userId,
+                                isFavorite,
+                                isUserRoom),
                             // Vendor photo
                             _verdorProfile(room),
                           ],
@@ -148,7 +156,7 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                         SizedBox(height: size.height * 0.02),
                         Row(
                           children: [
-                            Text(room.location,
+                            Text(room.city,
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold)),
                             const Spacer(),

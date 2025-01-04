@@ -48,7 +48,7 @@ class _RoomDetailsState extends State<RoomDetails> {
           children: [
             _roomImages(size, widget.userId, context),
             roomInfoBellowImages(size),
-            widget.room.isActive == true
+            widget.room.active == true
                 ? _activeContainerTrue()
                 : _activeContainerFalse(),
             SizedBox(height: size.height * 0.02),
@@ -107,7 +107,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                     ),
                   ),
                   Text(
-                    widget.room.location,
+                    widget.room.city,
                     style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -324,7 +324,7 @@ class _RoomDetailsState extends State<RoomDetails> {
           ),
           SizedBox(height: size.height * 0.02),
           Text(
-            'Room in ${widget.room.location ?? 'Default city'}',
+            'Room in ${widget.room.city ?? 'Default city'}',
             style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,

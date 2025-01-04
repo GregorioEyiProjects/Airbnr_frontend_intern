@@ -1,14 +1,14 @@
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class LocationOB {
+class RoomLocationOB {
   @Id(assignable: true)
   int? id;
   String mongoRoomId;
   double latitude;
   double longitude;
 
-  LocationOB(
+  RoomLocationOB(
       {this.id,
       required this.mongoRoomId,
       required this.latitude,

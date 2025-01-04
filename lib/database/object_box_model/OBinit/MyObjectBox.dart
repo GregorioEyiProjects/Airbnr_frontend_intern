@@ -1,4 +1,4 @@
-import 'package:airbnbr/database/object_box_model/entities/Location_O_Box.dart';
+import 'package:airbnbr/database/object_box_model/entities/RoomLocationOBModel.dart';
 import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
 import 'package:airbnbr/database/object_box_model/entities/userFavRooms.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +11,13 @@ class MyObjectBox {
   late final Store _store;
   late final Box<RoomOB> _roomBox;
   late final Box<UserOB> _userBox;
-  late final Box<LocationOB> locationBox;
+  late final Box<RoomLocationOB> locationBox;
   late final Box<UserFavoriteRooms> userFavoriteRooms;
 
   MyObjectBox._init(this._store) {
     _roomBox = Box<RoomOB>(_store);
     _userBox = Box<UserOB>(_store);
-    locationBox = Box<LocationOB>(_store);
+    locationBox = Box<RoomLocationOB>(_store);
     userFavoriteRooms = Box<UserFavoriteRooms>(_store);
     print('MyObjectBox initialized');
   }
