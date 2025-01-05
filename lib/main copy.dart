@@ -1,13 +1,18 @@
-import 'package:airbnbr/components/display_place.dart';
 import 'package:airbnbr/database/db.dart';
+import 'package:airbnbr/database/objectBoxDB.dart';
+import 'package:airbnbr/database/objectBox_helper.dart';
 import 'package:airbnbr/database/object_box_model/OBinit/MyObjectBox.dart';
-import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
-import 'package:airbnbr/database/object_box_model/entities/RoomOBModel.dart';
+import 'package:airbnbr/database/object_box_model/entities/userFavRooms.dart';
+//import 'package:airbnbr/database/object_box_model/entities/User_O_Box.dart';
+//import 'package:airbnbr/database/object_box_model/entities/Room_Object_Box.dart';
 import 'package:airbnbr/injection_containert.dart';
 import 'package:airbnbr/model/fav_room_model.dart';
+//import 'package:airbnbr/model/fav_room_model.dart';
 import 'package:airbnbr/model/room_model.dart';
-import 'package:airbnbr/model/user_login_model.dart';
-import 'package:airbnbr/model/user_register_email.dart';
+import 'package:airbnbr/objectbox.g.dart';
+import 'package:airbnbr/provider/roomProvider.dart';
+//import 'package:airbnbr/model/user_login_model.dart';
+//import 'package:airbnbr/model/user_register_email.dart';
 import 'package:airbnbr/provider/user_fav_room_provider.dart';
 import 'package:airbnbr/views/home/home_screen.dart';
 import 'package:airbnbr/views/home/reserveRoom/request_to_book.dart';
@@ -15,15 +20,20 @@ import 'package:airbnbr/views/home/room_details.dart';
 import 'package:airbnbr/views/login/loginWithEmail.dart';
 import 'package:airbnbr/views/profile/userSettings/userSettings.dart';
 import 'package:airbnbr/views/register/registerContact.dart';
+import 'package:airbnbr/views/stays/Stays.dart';
 import 'package:flutter/material.dart';
 import 'package:airbnbr/views/login/loginWithContact.dart';
 import 'package:airbnbr/views/register/registerEmail.dart';
 import 'package:go_router/go_router.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:objectbox/objectbox.dart';
+//import 'package:objectbox/objectbox.dart';
+//import 'package:airbnbr/components/display_place.dart';
 
-//late MyObjectBox objectBox;
+late MyObjectBox objectBox;
+late Objectboxdb objectBoxdb;
+late ConnectionApi roomApi;
 
 void main() async {
   //Ensuring the user stays isLoggedIn after closing the app
@@ -34,17 +44,33 @@ void main() async {
   String? userIdShareP = prefs.getString('token');
   String? userEmailShareP = prefs.getString('token_user_email');
 
-  //ObejctBox
-  //objectBox = await MyObjectBox.init();
+  /* OBJECT BOX INIT */
+  objectBoxdb = await Objectboxdb.getInstance();
 
-  //ObjectBox injection
-  //setupLocator();
+  //Revome all users (for testing purposes)
+  //await objectBoxdb.removeAllUsers();
 
-  //await setupLocator();
+  //Initialize the GetIt locator, which will be used to inject the RoomApi
+  await setupLocator(objectBoxdb);
 
+  //Get all rooms from the Backend
+  roomApi = locator<ConnectionApi>();
+  List<Room> listOfRooms = await roomApi.fetchAllRoom();
+
+  ////To copy the list of room to the provider to be used in the app
+  /// create: (context) => Roomprovider()..addRooms(listOfRooms)
+  /// The ".." Is call cascade notation and it creates an instance of RoomProvider and then calls the addRooms method on that instance.
+  /// This allows you to perform multiple operations on the same object
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => FavRoomsScreenProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FavRoomsScreenProvider()),
+        ChangeNotifierProvider(
+            create: (context) => RoomProvider()..addRooms(listOfRooms)),
+        Provider<Objectboxdb>.value(value: objectBoxdb),
+        Provider<ConnectionApi>(create: (context) => locator<ConnectionApi>()),
+      ],
+      //create: (context) => FavRoomsScreenProvider(),
       child: MyApp(
         isLoggedIn: isLoggedIn,
         userIdMyApp: userIdShareP,
@@ -114,15 +140,27 @@ class _MyRouterState extends State<MyRouter> {
         GoRoute(
           path: "/login_with_contact",
           pageBuilder: (context, state) {
+            //final String? contact = state.uri.queryParameters['contact'];
+
             final String? contact = state.uri.queryParameters['contact'];
-            return MaterialPage(child: LoginWithContact(userContact: contact));
+            print(
+                'Main - Navigating to LoginWithContact with contact: $contact');
+            //GoRouter.of(context).refresh();
+            return MaterialPage(
+              key: ValueKey(contact),
+              child: LoginWithContact(userContact: contact),
+            );
           },
         ),
         GoRoute(
           path: "/login_with_gmail",
           pageBuilder: (context, state) {
             final String? email = state.uri.queryParameters['email'];
-            return MaterialPage(child: LoginWithEmail(email: email));
+            print('Main - Navigating to LoginWithEmail with email: $email');
+            return MaterialPage(
+              key: ValueKey(email),
+              child: LoginWithEmail(email: email),
+            );
           },
         ),
         GoRoute(
@@ -130,8 +168,7 @@ class _MyRouterState extends State<MyRouter> {
           pageBuilder: (context, state) {
             final userLoginEmail = state.extra as String;
             return MaterialPage(
-              child: RegisterWithEmail(email: userLoginEmail),
-            );
+                child: RegisterWithEmail(email: userLoginEmail));
           },
         ),
         GoRoute(
@@ -139,8 +176,7 @@ class _MyRouterState extends State<MyRouter> {
           pageBuilder: (context, state) {
             final userLoginContact = state.extra as String;
             return MaterialPage(
-              child: RegisterWithContactCont(contact: userLoginContact),
-            );
+                child: RegisterWithContactCont(contact: userLoginContact));
           },
         ),
         GoRoute(
@@ -162,8 +198,9 @@ class _MyRouterState extends State<MyRouter> {
             final userId = widget.isLoggedIn && unsureUserID != null
                 ? unsureUserID
                 : userIdFromLogin;
-            print('Main userIdFromLogin : ${userIdFromLogin}');
-            print('Main MyRouter User_ID?: ${userId}');
+            print(
+                'Main home_screen_myRouter userIdFromLogin : ${userIdFromLogin}');
+            print('Main home_screen_myRouter User_ID?: ${userId}');
 
             if (userId == null) {
               print('Main Error: userId is null');
@@ -172,6 +209,15 @@ class _MyRouterState extends State<MyRouter> {
               );
             }
             print('Main MyRouter User_ID?: ${userId}');
+
+            //Fecth the user's favorite rooms from the Backend
+            final favUserRooms = roomApi.fetchFavRooms(userId);
+            print('Main MyRouter favUserRooms: ${favUserRooms}');
+
+            //Add the favorite rooms to the Local DB (ObjectBox)
+            //addFavRoomToOB(context, favUserRooms);
+            // Retrieve the user's favorite rooms from objextBox if there are any
+            retrieveFavRooms(context, userId);
             return MaterialPage(
               child: HomeScreen(userId: userId),
             );
@@ -213,6 +259,16 @@ class _MyRouterState extends State<MyRouter> {
               child: UserSettings(),
             );
           },
+        ),
+        GoRoute(
+          path: "/whereTo",
+          pageBuilder: (context, state) {
+            //final userID = state.uri.queryParameters['userId'];
+            //final room = state.extra as Room;
+            return const MaterialPage(
+              child: Stays(),
+            );
+          },
         )
       ],
     );
@@ -220,8 +276,6 @@ class _MyRouterState extends State<MyRouter> {
 
   @override
   Widget build(BuildContext context) {
-    //final roomApi = RoomApi(objectBox);
-
     return Material(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

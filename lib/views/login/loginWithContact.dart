@@ -109,7 +109,7 @@ class _LoginWithContactState extends State<LoginWithContact> {
               //------ BUTTON CONTINUE ------ //
               InkWell(
                 onTap: () async {
-                  final roomApi = locator<RoomApi>();
+                  final roomApi = locator<ConnectionApi>();
                   await roomApi.loginWithContact_(
                       contactController.text, context);
                 },

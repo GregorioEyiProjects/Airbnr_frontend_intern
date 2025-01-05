@@ -32,11 +32,12 @@ class FavRoomsScreenProvider extends ChangeNotifier {
   }
 
 //to load the favorite rooms once the app starts
-  void setFavRooms(List<FavRoom> favRooms) {
+  void addFavRooms(List<FavRoom> favRooms) {
     _favRoomIds = favRooms;
     notifyListeners();
   }
 
+//to remove the favorite room and display the updated list
   void removeFavorite(String roomId) {
     _favRoomIds.removeWhere((favRoom) => favRoom.roomId == roomId);
     print('Current favorites after removal: $_favRoomIds');
@@ -46,7 +47,7 @@ class FavRoomsScreenProvider extends ChangeNotifier {
   Future<void> addFavRoomInDB(String userID, String roomID, context) async {
     try {
       //RoomApi roomApi = RoomApi();
-      final roomApi = locator<RoomApi>();
+      final roomApi = locator<ConnectionApi>();
       await roomApi.addFavRoomToDB(userID, roomID, context);
     } catch (e) {
       if (kDebugMode) {
@@ -59,7 +60,7 @@ class FavRoomsScreenProvider extends ChangeNotifier {
   Future<void> deleteFavRoomInDB(String userID, String roomID, context) async {
     try {
       //RoomApi roomApi = RoomApi();
-      final roomApi = locator<RoomApi>();
+      final roomApi = locator<ConnectionApi>();
 
       final response = await roomApi.deleteFavRoom(userID, roomID, context);
       if (response.statusCode == 200) {
@@ -73,6 +74,12 @@ class FavRoomsScreenProvider extends ChangeNotifier {
         print(e);
       }
     }
+    notifyListeners();
+  }
+
+  //Clear the favorite rooms list when the user logs out
+  void clearFavRooms() {
+    _favRoomIds.clear();
     notifyListeners();
   }
 }

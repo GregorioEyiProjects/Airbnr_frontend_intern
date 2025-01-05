@@ -23,135 +23,164 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(5, 7747724712943564244),
-      name: 'RoomOB',
-      lastPropertyId: const obx_int.IdUid(27, 5628587812979705812),
+      id: const obx_int.IdUid(1, 6023772140699827459),
+      name: 'RoomLocationOB',
+      lastPropertyId: const obx_int.IdUid(4, 8744809026042645799),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 6312709080681933660),
+            id: const obx_int.IdUid(1, 4426476520199557082),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 5726215036407961112),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7881944165335453516),
-            name: 'price',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 8886024056402757912),
-            name: 'rating',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 7569215754004512837),
-            name: 'bedNumbers',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 178854923755931348),
-            name: 'reviewNumbers',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 5335821829173199242),
-            name: 'roomImages',
-            type: 30,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 1476037705861780652),
-            name: 'vendorName',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 1480324157585633065),
-            name: 'yearsHosting',
-            type: 6,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 196250874447787332),
-            name: 'vendorProfession',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 4581666040113228268),
-            name: 'authorImage',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(13, 8142282418440620282),
-            name: 'date',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(15, 5846027037057264242),
-            name: 'description',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(16, 5065577032819898192),
-            name: 'localtionDataId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(2, 2627266253664584719),
-            relationTarget: 'RoomLocationOB'),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(17, 8753780195802096363),
+            id: const obx_int.IdUid(2, 218708589179883951),
             name: 'mongoRoomId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(18, 3721173426345892645),
+            id: const obx_int.IdUid(3, 6707403899378404946),
+            name: 'latitude',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8744809026042645799),
+            name: 'longitude',
+            type: 8,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(2, 1753996915927756656),
+      name: 'RoomOB',
+      lastPropertyId: const obx_int.IdUid(25, 7095101733604420207),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 8941994889502324079),
+            name: 'id',
+            type: 6,
+            flags: 129),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 1105391046665175600),
+            name: 'mongoRoomId',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 1881315269410027178),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 8477599218740113473),
+            name: 'price',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 254326198280008745),
+            name: 'rating',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2832093131822162785),
+            name: 'bedNumbers',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6656074859282206606),
+            name: 'reviewNumbers',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 3748083133917304319),
+            name: 'roomImages',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 5929263090750935088),
+            name: 'vendorName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 2886574000630611912),
+            name: 'yearsHosting',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 412353136065473762),
+            name: 'vendorProfession',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 9015617717841804961),
+            name: 'authorImage',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 5128448604998967206),
             name: 'city',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(19, 4530169160535872365),
+            id: const obx_int.IdUid(14, 6538918448627441319),
+            name: 'date',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 4135499863254446310),
             name: 'active',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(20, 1269219155787807767),
+            id: const obx_int.IdUid(16, 7129641178816376876),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(17, 3144780948034142034),
+            name: 'localtionDataId',
+            type: 11,
+            flags: 520,
+            indexId: const obx_int.IdUid(1, 8020348480946729415),
+            relationTarget: 'RoomLocationOB'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(18, 4172937872117811586),
             name: 'avaibleStartTime',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(21, 8454935592229227112),
+            id: const obx_int.IdUid(19, 3505107893379570634),
             name: 'avaibleEndTime',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(22, 773147041116942381),
+            id: const obx_int.IdUid(20, 5884291341620033704),
             name: 'stayFor',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(23, 1699302663051247313),
+            id: const obx_int.IdUid(21, 3438260559794817871),
             name: 'stayOn',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(24, 1927341894056080605),
+            id: const obx_int.IdUid(22, 4555406980118739658),
             name: 'petsAllowed',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(25, 1342325527089518447),
+            id: const obx_int.IdUid(23, 7369786094934243584),
             name: 'maxAdults',
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(26, 941954933341279644),
+            id: const obx_int.IdUid(24, 7428754641827444399),
             name: 'maxChildren',
             type: 6,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(27, 5628587812979705812),
+            id: const obx_int.IdUid(25, 7095101733604420207),
             name: 'maxInfants',
             type: 6,
             flags: 0)
@@ -159,128 +188,114 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(7, 412722712270769109),
-      name: 'UserFavoriteRooms',
-      lastPropertyId: const obx_int.IdUid(4, 4637185327405087543),
+      id: const obx_int.IdUid(3, 826125529312467720),
+      name: 'UserFavOB',
+      lastPropertyId: const obx_int.IdUid(7, 2220139518696705375),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7463564137606913292),
+            id: const obx_int.IdUid(1, 5738979991859602620),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 2700283543472420694),
+            id: const obx_int.IdUid(2, 7191477558351725551),
+            name: 'roomName',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4419412774339401026),
             name: 'userId',
-            type: 6,
+            type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7886854334430888876),
+            id: const obx_int.IdUid(4, 7982023161207811143),
             name: 'roomId',
-            type: 6,
+            type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 4637185327405087543),
+            id: const obx_int.IdUid(5, 6468261178194488594),
+            name: 'roomImages',
+            type: 30,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 8726917373683674675),
             name: 'createdAt',
             type: 10,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2220139518696705375),
+            name: 'mongosFavRoomId',
+            type: 9,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(8, 6177229634773767026),
+      id: const obx_int.IdUid(4, 1040291137909068040),
       name: 'UserOB',
-      lastPropertyId: const obx_int.IdUid(12, 3122944944695595943),
+      lastPropertyId: const obx_int.IdUid(12, 2528177280103630347),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 4783680027168924317),
+            id: const obx_int.IdUid(1, 1491246913565054012),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7649138873675959022),
+            id: const obx_int.IdUid(2, 208516405425134224),
             name: 'mongoUserId',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 6485311616914222468),
+            id: const obx_int.IdUid(3, 5467620241648465943),
             name: 'firstName',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 5846641252534598822),
+            id: const obx_int.IdUid(4, 3370376236631851435),
             name: 'lastName',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 792473414221146360),
+            id: const obx_int.IdUid(5, 1244556058104707714),
             name: 'dateOfBirth',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 2658738559138909992),
+            id: const obx_int.IdUid(6, 3918329005901343822),
             name: 'email',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 9150075211133225165),
+            id: const obx_int.IdUid(7, 4691032746661516504),
             name: 'contact',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 224933734359115854),
+            id: const obx_int.IdUid(8, 1871518998255262286),
             name: 'password',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(9, 443880318862135751),
+            id: const obx_int.IdUid(9, 7465712925097931554),
             name: 'profileImage',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(10, 7033399833034288469),
+            id: const obx_int.IdUid(10, 7168421005145187450),
             name: 'role',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(11, 7618177450346852753),
+            id: const obx_int.IdUid(11, 4750556984656283046),
             name: 'createdAt',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(12, 3122944944695595943),
+            id: const obx_int.IdUid(12, 2528177280103630347),
             name: 'updatedAt',
             type: 10,
-            flags: 0)
-      ],
-      relations: <obx_int.ModelRelation>[],
-      backlinks: <obx_int.ModelBacklink>[]),
-  obx_int.ModelEntity(
-      id: const obx_int.IdUid(10, 5258587046230845498),
-      name: 'RoomLocationOB',
-      lastPropertyId: const obx_int.IdUid(4, 8241922314698725244),
-      flags: 0,
-      properties: <obx_int.ModelProperty>[
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 7585943375898796757),
-            name: 'id',
-            type: 6,
-            flags: 129),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 3357350098574376592),
-            name: 'mongoRoomId',
-            type: 9,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 6852145392933272982),
-            name: 'latitude',
-            type: 8,
-            flags: 0),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 8241922314698725244),
-            name: 'longitude',
-            type: 8,
             flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
@@ -322,127 +337,34 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(10, 5258587046230845498),
-      lastIndexId: const obx_int.IdUid(2, 2627266253664584719),
+      lastEntityId: const obx_int.IdUid(4, 1040291137909068040),
+      lastIndexId: const obx_int.IdUid(1, 8020348480946729415),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
-      retiredEntityUids: const [
-        4917190004449752312,
-        7202278025822394323,
-        3463601388008821113,
-        2663420647659323758,
-        6981604499755645924,
-        7875067583487514368
-      ],
+      retiredEntityUids: const [],
       retiredIndexUids: const [],
-      retiredPropertyUids: const [
-        7044988631595062363,
-        5615752644791754396,
-        3297483856214139559,
-        767440936092554521,
-        7677447083005777399,
-        5399293204943354502,
-        1344140945122154010,
-        2395905018165832663,
-        7079449029828322476,
-        96225532624804367,
-        2799830184709052808,
-        7954617473884594720,
-        6960225503853726624,
-        4734534155192218878,
-        1805272576112017943,
-        7381280166104174349,
-        565592845782306876,
-        2414588863698305143,
-        8610120808475242834,
-        1226919929882962062,
-        5099102198337960943,
-        7177683697030470928,
-        4292416621876169122,
-        8947453078582537568,
-        2404696663916090067,
-        4701889871457702763,
-        5373421823494201827,
-        2888292606048140628,
-        4469833754710526169,
-        1594357782016536985,
-        4549931753830407398,
-        8688862140570745517,
-        6753897230514193229,
-        6048254140240039498,
-        938537233958993765,
-        3988095966554290416,
-        2176672888366587291,
-        2661787082434127166,
-        2718634718033263908,
-        8378270717232383680,
-        2459728430314415023,
-        315960035662465648,
-        6314156896850207743,
-        3099677569853995082,
-        6300693485986529242,
-        2196674909696025177,
-        3219077870239713468,
-        6230735350825289298,
-        6190401330312554562,
-        7006921639940840456,
-        4139100330091928160,
-        6131584352045644398
-      ],
+      retiredPropertyUids: const [],
       retiredRelationUids: const [],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
       version: 1);
 
   final bindings = <Type, obx_int.EntityDefinition>{
-    RoomOB: obx_int.EntityDefinition<RoomOB>(
+    RoomLocationOB: obx_int.EntityDefinition<RoomLocationOB>(
         model: _entities[0],
-        toOneRelations: (RoomOB object) => [object.localtionData],
-        toManyRelations: (RoomOB object) => {},
-        getId: (RoomOB object) => object.id,
-        setId: (RoomOB object, int id) {
+        toOneRelations: (RoomLocationOB object) => [],
+        toManyRelations: (RoomLocationOB object) => {},
+        getId: (RoomLocationOB object) => object.id,
+        setId: (RoomLocationOB object, int id) {
           object.id = id;
         },
-        objectToFB: (RoomOB object, fb.Builder fbb) {
-          final nameOffset = fbb.writeString(object.name);
-          final roomImagesOffset = fbb.writeList(
-              object.roomImages.map(fbb.writeString).toList(growable: false));
-          final vendorNameOffset = fbb.writeString(object.vendorName);
-          final vendorProfessionOffset =
-              fbb.writeString(object.vendorProfession);
-          final authorImageOffset = fbb.writeString(object.authorImage);
-          final dateOffset = fbb.writeString(object.date);
-          final descriptionOffset = fbb.writeString(object.description);
+        objectToFB: (RoomLocationOB object, fb.Builder fbb) {
           final mongoRoomIdOffset = fbb.writeString(object.mongoRoomId);
-          final cityOffset = fbb.writeString(object.city);
-          final stayForOffset = fbb.writeString(object.stayFor);
-          final stayOnOffset = fbb.writeString(object.stayOn);
-          fbb.startTable(28);
+          fbb.startTable(5);
           fbb.addInt64(0, object.id ?? 0);
-          fbb.addOffset(1, nameOffset);
-          fbb.addFloat64(2, object.price);
-          fbb.addFloat64(3, object.rating);
-          fbb.addInt64(4, object.bedNumbers);
-          fbb.addInt64(5, object.reviewNumbers);
-          fbb.addOffset(6, roomImagesOffset);
-          fbb.addOffset(7, vendorNameOffset);
-          fbb.addInt64(8, object.yearsHosting);
-          fbb.addOffset(9, vendorProfessionOffset);
-          fbb.addOffset(10, authorImageOffset);
-          fbb.addOffset(12, dateOffset);
-          fbb.addOffset(14, descriptionOffset);
-          fbb.addInt64(15, object.localtionData.targetId);
-          fbb.addOffset(16, mongoRoomIdOffset);
-          fbb.addOffset(17, cityOffset);
-          fbb.addBool(18, object.active);
-          fbb.addInt64(19, object.avaibleStartTime.millisecondsSinceEpoch);
-          fbb.addInt64(20, object.avaibleEndTime.millisecondsSinceEpoch);
-          fbb.addOffset(21, stayForOffset);
-          fbb.addOffset(22, stayOnOffset);
-          fbb.addBool(23, object.petsAllowed);
-          fbb.addInt64(24, object.maxAdults);
-          fbb.addInt64(25, object.maxChildren);
-          fbb.addInt64(26, object.maxInfants);
+          fbb.addOffset(1, mongoRoomIdOffset);
+          fbb.addFloat64(2, object.latitude);
+          fbb.addFloat64(3, object.longitude);
           fbb.finish(fbb.endTable());
           return object.id ?? 0;
         },
@@ -453,56 +375,127 @@ obx_int.ModelDefinition getObjectBoxModel() {
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
           final mongoRoomIdParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 36, '');
-          final nameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 6, '');
-          final priceParam =
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final latitudeParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          final ratingParam =
+          final longitudeParam =
               const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final object = RoomLocationOB(
+              id: idParam,
+              mongoRoomId: mongoRoomIdParam,
+              latitude: latitudeParam,
+              longitude: longitudeParam);
+
+          return object;
+        }),
+    RoomOB: obx_int.EntityDefinition<RoomOB>(
+        model: _entities[1],
+        toOneRelations: (RoomOB object) => [object.localtionData],
+        toManyRelations: (RoomOB object) => {},
+        getId: (RoomOB object) => object.id,
+        setId: (RoomOB object, int id) {
+          object.id = id;
+        },
+        objectToFB: (RoomOB object, fb.Builder fbb) {
+          final mongoRoomIdOffset = fbb.writeString(object.mongoRoomId);
+          final nameOffset = fbb.writeString(object.name);
+          final roomImagesOffset = fbb.writeList(
+              object.roomImages.map(fbb.writeString).toList(growable: false));
+          final vendorNameOffset = fbb.writeString(object.vendorName);
+          final vendorProfessionOffset =
+              fbb.writeString(object.vendorProfession);
+          final authorImageOffset = fbb.writeString(object.authorImage);
+          final cityOffset = fbb.writeString(object.city);
+          final dateOffset = fbb.writeString(object.date);
+          final descriptionOffset = fbb.writeString(object.description);
+          final stayForOffset = fbb.writeString(object.stayFor);
+          final stayOnOffset = fbb.writeString(object.stayOn);
+          fbb.startTable(26);
+          fbb.addInt64(0, object.id ?? 0);
+          fbb.addOffset(1, mongoRoomIdOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addFloat64(3, object.price);
+          fbb.addFloat64(4, object.rating);
+          fbb.addInt64(5, object.bedNumbers);
+          fbb.addInt64(6, object.reviewNumbers);
+          fbb.addOffset(7, roomImagesOffset);
+          fbb.addOffset(8, vendorNameOffset);
+          fbb.addInt64(9, object.yearsHosting);
+          fbb.addOffset(10, vendorProfessionOffset);
+          fbb.addOffset(11, authorImageOffset);
+          fbb.addOffset(12, cityOffset);
+          fbb.addOffset(13, dateOffset);
+          fbb.addBool(14, object.active);
+          fbb.addOffset(15, descriptionOffset);
+          fbb.addInt64(16, object.localtionData.targetId);
+          fbb.addInt64(17, object.avaibleStartTime.millisecondsSinceEpoch);
+          fbb.addInt64(18, object.avaibleEndTime.millisecondsSinceEpoch);
+          fbb.addOffset(19, stayForOffset);
+          fbb.addOffset(20, stayOnOffset);
+          fbb.addBool(21, object.petsAllowed);
+          fbb.addInt64(22, object.maxAdults);
+          fbb.addInt64(23, object.maxChildren);
+          fbb.addInt64(24, object.maxInfants);
+          fbb.finish(fbb.endTable());
+          return object.id ?? 0;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final idParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
+          final mongoRoomIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, '');
+          final nameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final priceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final ratingParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0);
           final bedNumbersParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0);
           final reviewNumbersParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
           final roomImagesParam = const fb.ListReader<String>(
                   fb.StringReader(asciiOptimization: true),
                   lazy: false)
-              .vTableGet(buffer, rootOffset, 16, []);
+              .vTableGet(buffer, rootOffset, 18, []);
           final vendorNameParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 18, '');
+              .vTableGet(buffer, rootOffset, 20, '');
           final yearsHostingParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 20, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
           final vendorProfessionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 22, '');
+                  .vTableGet(buffer, rootOffset, 24, '');
           final authorImageParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 24, '');
+                  .vTableGet(buffer, rootOffset, 26, '');
           final cityParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 38, '');
-          final dateParam = const fb.StringReader(asciiOptimization: true)
               .vTableGet(buffer, rootOffset, 28, '');
+          final dateParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 30, '');
           final activeParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 40, false);
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false);
           final descriptionParam =
               const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 32, '');
+                  .vTableGet(buffer, rootOffset, 34, '');
           final avaibleStartTimeParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0));
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 38, 0));
           final avaibleEndTimeParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0));
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 40, 0));
           final stayForParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 46, '');
+              .vTableGet(buffer, rootOffset, 42, '');
           final stayOnParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGet(buffer, rootOffset, 48, '');
+              .vTableGet(buffer, rootOffset, 44, '');
           final petsAllowedParam =
-              const fb.BoolReader().vTableGet(buffer, rootOffset, 50, false);
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 46, false);
           final maxAdultsParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 48, 0);
           final maxChildrenParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 54, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 50, 0);
           final maxInfantsParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 56, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 52, 0);
           final object = RoomOB(
               id: idParam,
               mongoRoomId: mongoRoomIdParam,
@@ -529,24 +522,33 @@ obx_int.ModelDefinition getObjectBoxModel() {
               maxChildren: maxChildrenParam,
               maxInfants: maxInfantsParam);
           object.localtionData.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0);
           object.localtionData.attach(store);
           return object;
         }),
-    UserFavoriteRooms: obx_int.EntityDefinition<UserFavoriteRooms>(
-        model: _entities[1],
-        toOneRelations: (UserFavoriteRooms object) => [],
-        toManyRelations: (UserFavoriteRooms object) => {},
-        getId: (UserFavoriteRooms object) => object.id,
-        setId: (UserFavoriteRooms object, int id) {
+    UserFavOB: obx_int.EntityDefinition<UserFavOB>(
+        model: _entities[2],
+        toOneRelations: (UserFavOB object) => [],
+        toManyRelations: (UserFavOB object) => {},
+        getId: (UserFavOB object) => object.id,
+        setId: (UserFavOB object, int id) {
           object.id = id;
         },
-        objectToFB: (UserFavoriteRooms object, fb.Builder fbb) {
-          fbb.startTable(5);
+        objectToFB: (UserFavOB object, fb.Builder fbb) {
+          final roomNameOffset = fbb.writeString(object.roomName);
+          final userIdOffset = fbb.writeString(object.userId);
+          final roomIdOffset = fbb.writeString(object.roomId);
+          final roomImagesOffset = fbb.writeList(
+              object.roomImages.map(fbb.writeString).toList(growable: false));
+          final mongosFavRoomIdOffset = fbb.writeString(object.mongosFavRoomId);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id ?? 0);
-          fbb.addInt64(1, object.userId);
-          fbb.addInt64(2, object.roomId);
-          fbb.addInt64(3, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(1, roomNameOffset);
+          fbb.addOffset(2, userIdOffset);
+          fbb.addOffset(3, roomIdOffset);
+          fbb.addOffset(4, roomImagesOffset);
+          fbb.addInt64(5, object.createdAt.millisecondsSinceEpoch);
+          fbb.addOffset(6, mongosFavRoomIdOffset);
           fbb.finish(fbb.endTable());
           return object.id ?? 0;
         },
@@ -555,22 +557,32 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
           final idParam =
               const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
-          final userIdParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
-          final roomIdParam =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 8, 0);
           final createdAtParam = DateTime.fromMillisecondsSinceEpoch(
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 10, 0));
-          final object = UserFavoriteRooms(
-              id: idParam,
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0));
+          final mongosFavRoomIdParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, '');
+          final roomNameParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 6, '');
+          final userIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 8, '');
+          final roomIdParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGet(buffer, rootOffset, 10, '');
+          final roomImagesParam = const fb.ListReader<String>(
+                  fb.StringReader(asciiOptimization: true),
+                  lazy: false)
+              .vTableGet(buffer, rootOffset, 12, []);
+          final object = UserFavOB(idParam, createdAtParam,
+              mongosFavRoomId: mongosFavRoomIdParam,
+              roomName: roomNameParam,
               userId: userIdParam,
               roomId: roomIdParam,
-              createdAt: createdAtParam);
+              roomImages: roomImagesParam);
 
           return object;
         }),
     UserOB: obx_int.EntityDefinition<UserOB>(
-        model: _entities[2],
+        model: _entities[3],
         toOneRelations: (UserOB object) => [],
         toManyRelations: (UserOB object) => {},
         getId: (UserOB object) => object.id,
@@ -648,238 +660,212 @@ obx_int.ModelDefinition getObjectBoxModel() {
               updatedAt: updatedAtParam);
 
           return object;
-        }),
-    RoomLocationOB: obx_int.EntityDefinition<RoomLocationOB>(
-        model: _entities[3],
-        toOneRelations: (RoomLocationOB object) => [],
-        toManyRelations: (RoomLocationOB object) => {},
-        getId: (RoomLocationOB object) => object.id,
-        setId: (RoomLocationOB object, int id) {
-          object.id = id;
-        },
-        objectToFB: (RoomLocationOB object, fb.Builder fbb) {
-          final mongoRoomIdOffset = fbb.writeString(object.mongoRoomId);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.id ?? 0);
-          fbb.addOffset(1, mongoRoomIdOffset);
-          fbb.addFloat64(2, object.latitude);
-          fbb.addFloat64(3, object.longitude);
-          fbb.finish(fbb.endTable());
-          return object.id ?? 0;
-        },
-        objectFromFB: (obx.Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-          final idParam =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
-          final mongoRoomIdParam =
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, '');
-          final latitudeParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0);
-          final longitudeParam =
-              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
-          final object = RoomLocationOB(
-              id: idParam,
-              mongoRoomId: mongoRoomIdParam,
-              latitude: latitudeParam,
-              longitude: longitudeParam);
-
-          return object;
         })
   };
 
   return obx_int.ModelDefinition(model, bindings);
 }
 
+/// [RoomLocationOB] entity fields to define ObjectBox queries.
+class RoomLocationOB_ {
+  /// See [RoomLocationOB.id].
+  static final id =
+      obx.QueryIntegerProperty<RoomLocationOB>(_entities[0].properties[0]);
+
+  /// See [RoomLocationOB.mongoRoomId].
+  static final mongoRoomId =
+      obx.QueryStringProperty<RoomLocationOB>(_entities[0].properties[1]);
+
+  /// See [RoomLocationOB.latitude].
+  static final latitude =
+      obx.QueryDoubleProperty<RoomLocationOB>(_entities[0].properties[2]);
+
+  /// See [RoomLocationOB.longitude].
+  static final longitude =
+      obx.QueryDoubleProperty<RoomLocationOB>(_entities[0].properties[3]);
+}
+
 /// [RoomOB] entity fields to define ObjectBox queries.
 class RoomOB_ {
   /// See [RoomOB.id].
   static final id =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[0]);
-
-  /// See [RoomOB.name].
-  static final name =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[1]);
-
-  /// See [RoomOB.price].
-  static final price =
-      obx.QueryDoubleProperty<RoomOB>(_entities[0].properties[2]);
-
-  /// See [RoomOB.rating].
-  static final rating =
-      obx.QueryDoubleProperty<RoomOB>(_entities[0].properties[3]);
-
-  /// See [RoomOB.bedNumbers].
-  static final bedNumbers =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[4]);
-
-  /// See [RoomOB.reviewNumbers].
-  static final reviewNumbers =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[5]);
-
-  /// See [RoomOB.roomImages].
-  static final roomImages =
-      obx.QueryStringVectorProperty<RoomOB>(_entities[0].properties[6]);
-
-  /// See [RoomOB.vendorName].
-  static final vendorName =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[7]);
-
-  /// See [RoomOB.yearsHosting].
-  static final yearsHosting =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[8]);
-
-  /// See [RoomOB.vendorProfession].
-  static final vendorProfession =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[9]);
-
-  /// See [RoomOB.authorImage].
-  static final authorImage =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[10]);
-
-  /// See [RoomOB.date].
-  static final date =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[11]);
-
-  /// See [RoomOB.description].
-  static final description =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[12]);
-
-  /// See [RoomOB.localtionData].
-  static final localtionData = obx.QueryRelationToOne<RoomOB, RoomLocationOB>(
-      _entities[0].properties[13]);
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[0]);
 
   /// See [RoomOB.mongoRoomId].
   static final mongoRoomId =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[14]);
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[1]);
+
+  /// See [RoomOB.name].
+  static final name =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[2]);
+
+  /// See [RoomOB.price].
+  static final price =
+      obx.QueryDoubleProperty<RoomOB>(_entities[1].properties[3]);
+
+  /// See [RoomOB.rating].
+  static final rating =
+      obx.QueryDoubleProperty<RoomOB>(_entities[1].properties[4]);
+
+  /// See [RoomOB.bedNumbers].
+  static final bedNumbers =
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[5]);
+
+  /// See [RoomOB.reviewNumbers].
+  static final reviewNumbers =
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[6]);
+
+  /// See [RoomOB.roomImages].
+  static final roomImages =
+      obx.QueryStringVectorProperty<RoomOB>(_entities[1].properties[7]);
+
+  /// See [RoomOB.vendorName].
+  static final vendorName =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[8]);
+
+  /// See [RoomOB.yearsHosting].
+  static final yearsHosting =
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[9]);
+
+  /// See [RoomOB.vendorProfession].
+  static final vendorProfession =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[10]);
+
+  /// See [RoomOB.authorImage].
+  static final authorImage =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[11]);
 
   /// See [RoomOB.city].
   static final city =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[15]);
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[12]);
+
+  /// See [RoomOB.date].
+  static final date =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[13]);
 
   /// See [RoomOB.active].
   static final active =
-      obx.QueryBooleanProperty<RoomOB>(_entities[0].properties[16]);
+      obx.QueryBooleanProperty<RoomOB>(_entities[1].properties[14]);
+
+  /// See [RoomOB.description].
+  static final description =
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[15]);
+
+  /// See [RoomOB.localtionData].
+  static final localtionData = obx.QueryRelationToOne<RoomOB, RoomLocationOB>(
+      _entities[1].properties[16]);
 
   /// See [RoomOB.avaibleStartTime].
   static final avaibleStartTime =
-      obx.QueryDateProperty<RoomOB>(_entities[0].properties[17]);
+      obx.QueryDateProperty<RoomOB>(_entities[1].properties[17]);
 
   /// See [RoomOB.avaibleEndTime].
   static final avaibleEndTime =
-      obx.QueryDateProperty<RoomOB>(_entities[0].properties[18]);
+      obx.QueryDateProperty<RoomOB>(_entities[1].properties[18]);
 
   /// See [RoomOB.stayFor].
   static final stayFor =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[19]);
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[19]);
 
   /// See [RoomOB.stayOn].
   static final stayOn =
-      obx.QueryStringProperty<RoomOB>(_entities[0].properties[20]);
+      obx.QueryStringProperty<RoomOB>(_entities[1].properties[20]);
 
   /// See [RoomOB.petsAllowed].
   static final petsAllowed =
-      obx.QueryBooleanProperty<RoomOB>(_entities[0].properties[21]);
+      obx.QueryBooleanProperty<RoomOB>(_entities[1].properties[21]);
 
   /// See [RoomOB.maxAdults].
   static final maxAdults =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[22]);
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[22]);
 
   /// See [RoomOB.maxChildren].
   static final maxChildren =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[23]);
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[23]);
 
   /// See [RoomOB.maxInfants].
   static final maxInfants =
-      obx.QueryIntegerProperty<RoomOB>(_entities[0].properties[24]);
+      obx.QueryIntegerProperty<RoomOB>(_entities[1].properties[24]);
 }
 
-/// [UserFavoriteRooms] entity fields to define ObjectBox queries.
-class UserFavoriteRooms_ {
-  /// See [UserFavoriteRooms.id].
+/// [UserFavOB] entity fields to define ObjectBox queries.
+class UserFavOB_ {
+  /// See [UserFavOB.id].
   static final id =
-      obx.QueryIntegerProperty<UserFavoriteRooms>(_entities[1].properties[0]);
+      obx.QueryIntegerProperty<UserFavOB>(_entities[2].properties[0]);
 
-  /// See [UserFavoriteRooms.userId].
+  /// See [UserFavOB.roomName].
+  static final roomName =
+      obx.QueryStringProperty<UserFavOB>(_entities[2].properties[1]);
+
+  /// See [UserFavOB.userId].
   static final userId =
-      obx.QueryIntegerProperty<UserFavoriteRooms>(_entities[1].properties[1]);
+      obx.QueryStringProperty<UserFavOB>(_entities[2].properties[2]);
 
-  /// See [UserFavoriteRooms.roomId].
+  /// See [UserFavOB.roomId].
   static final roomId =
-      obx.QueryIntegerProperty<UserFavoriteRooms>(_entities[1].properties[2]);
+      obx.QueryStringProperty<UserFavOB>(_entities[2].properties[3]);
 
-  /// See [UserFavoriteRooms.createdAt].
+  /// See [UserFavOB.roomImages].
+  static final roomImages =
+      obx.QueryStringVectorProperty<UserFavOB>(_entities[2].properties[4]);
+
+  /// See [UserFavOB.createdAt].
   static final createdAt =
-      obx.QueryDateProperty<UserFavoriteRooms>(_entities[1].properties[3]);
+      obx.QueryDateProperty<UserFavOB>(_entities[2].properties[5]);
+
+  /// See [UserFavOB.mongosFavRoomId].
+  static final mongosFavRoomId =
+      obx.QueryStringProperty<UserFavOB>(_entities[2].properties[6]);
 }
 
 /// [UserOB] entity fields to define ObjectBox queries.
 class UserOB_ {
   /// See [UserOB.id].
   static final id =
-      obx.QueryIntegerProperty<UserOB>(_entities[2].properties[0]);
+      obx.QueryIntegerProperty<UserOB>(_entities[3].properties[0]);
 
   /// See [UserOB.mongoUserId].
   static final mongoUserId =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[1]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[1]);
 
   /// See [UserOB.firstName].
   static final firstName =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[2]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[2]);
 
   /// See [UserOB.lastName].
   static final lastName =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[3]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[3]);
 
   /// See [UserOB.dateOfBirth].
   static final dateOfBirth =
-      obx.QueryDateProperty<UserOB>(_entities[2].properties[4]);
+      obx.QueryDateProperty<UserOB>(_entities[3].properties[4]);
 
   /// See [UserOB.email].
   static final email =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[5]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[5]);
 
   /// See [UserOB.contact].
   static final contact =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[6]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[6]);
 
   /// See [UserOB.password].
   static final password =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[7]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[7]);
 
   /// See [UserOB.profileImage].
   static final profileImage =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[8]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[8]);
 
   /// See [UserOB.role].
   static final role =
-      obx.QueryStringProperty<UserOB>(_entities[2].properties[9]);
+      obx.QueryStringProperty<UserOB>(_entities[3].properties[9]);
 
   /// See [UserOB.createdAt].
   static final createdAt =
-      obx.QueryDateProperty<UserOB>(_entities[2].properties[10]);
+      obx.QueryDateProperty<UserOB>(_entities[3].properties[10]);
 
   /// See [UserOB.updatedAt].
   static final updatedAt =
-      obx.QueryDateProperty<UserOB>(_entities[2].properties[11]);
-}
-
-/// [RoomLocationOB] entity fields to define ObjectBox queries.
-class RoomLocationOB_ {
-  /// See [RoomLocationOB.id].
-  static final id =
-      obx.QueryIntegerProperty<RoomLocationOB>(_entities[3].properties[0]);
-
-  /// See [RoomLocationOB.mongoRoomId].
-  static final mongoRoomId =
-      obx.QueryStringProperty<RoomLocationOB>(_entities[3].properties[1]);
-
-  /// See [RoomLocationOB.latitude].
-  static final latitude =
-      obx.QueryDoubleProperty<RoomLocationOB>(_entities[3].properties[2]);
-
-  /// See [RoomLocationOB.longitude].
-  static final longitude =
-      obx.QueryDoubleProperty<RoomLocationOB>(_entities[3].properties[3]);
+      obx.QueryDateProperty<UserOB>(_entities[3].properties[11]);
 }

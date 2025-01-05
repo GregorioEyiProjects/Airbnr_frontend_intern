@@ -4,11 +4,13 @@ import 'package:airbnbr/components/icon_button.dart';
 import 'package:airbnbr/database/objectBoxDB.dart';
 import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
 import 'package:airbnbr/main.dart';
+import 'package:airbnbr/provider/user_fav_room_provider.dart';
 import 'package:airbnbr/views/profile/userSettings/userSettings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -111,7 +113,7 @@ class _PState extends State<ProfileScreen> {
                   },
                   child: _listOfSettings(
                       Icons.person_2_outlined, "Personal information", () {
-                    GoRouter.of(context).go('/user_settings');
+                    //GoRouter.of(context).go('/user_settings');
                   }),
                 ),
                 _listOfSettings(Icons.security, "Login & security", () {
@@ -147,21 +149,32 @@ class _PState extends State<ProfileScreen> {
                 }),
                 InkWell(
                   onTap: () async {
-                    //Delete token from shared preferences
+                    // Delete token from shared preferences
                     SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     print(
-                        "UserProfile - Before Before userID token ${prefs.getString('token')} user email token ${prefs.getString('token_user_email')} isLoggedIn? ${prefs.getBool('isLoggedIn')}");
+                        "UserProfile - Before userID token ${prefs.getString('user_contact_token')} user email token ${prefs.getString('user_email_token')} isLoggedIn? ${prefs.getBool('isLoggedIn')}");
                     print(
                         "UserProfile - Before userOB_id token ${prefs.getInt('userOB_id')} ");
-                    await prefs.remove('token'); //  the contact is the ID
-                    await prefs.remove('token_user_email');
+                    await prefs
+                        .remove('user_contact_token'); // the contact is the ID
+                    await prefs.remove('user_email_token');
                     await prefs.remove('isLoggedIn');
                     await prefs.remove('userOB_id');
                     print(
-                        "UserProfile - After userID token ${prefs.getString('token')} user email token ${prefs.getString('token_user_email')} isLoggedIn? ${prefs.getBool('isLoggedIn')} ");
+                        "UserProfile - After userID token ${prefs.getString('user_contact_token')} user email token ${prefs.getString('user_email_token')} isLoggedIn? ${prefs.getBool('isLoggedIn')} ");
                     print(
                         "UserProfile - After userOB_id token ${prefs.getInt('userOB_id')} ");
+
+                    // Check if the widget is still mounted
+                    //if (!mounted) return;
+
+                    // Clear the provider list
+                    Provider.of<FavRoomsScreenProvider>(context, listen: false)
+                        .clearFavRooms();
+                    print('UserProfile - Provider list cleared');
+
+                    // Navigate to login screen
                     GoRouter.of(context).go('/login_with_contact');
                   },
                   child: _listOfSettings(

@@ -266,7 +266,7 @@ class _RegisterWithContactContState extends State<RegisterWithContactCont> {
           DateTime dateOfBirth = _dates[0]!;
 
           //final RoomApi roomApi = RoomApi();
-          final roomApi = locator<RoomApi>();
+          final roomApi = locator<ConnectionApi>();
 
           print("RegisterWithContactContState - DOB: ${dateOfBirth}");
           await roomApi.registerUserWithContact(

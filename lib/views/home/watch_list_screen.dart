@@ -14,9 +14,9 @@ class WatchListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final RoomApi roomApi = RoomApi(); // Create an instance of RoomApi
-    final roomApi = locator<RoomApi>();
+    final roomApi = locator<ConnectionApi>();
     //Notify the provider to load the favorite rooms
-    final provider = Provider.of<FavRoomsScreenProvider>(context);
+    final favRoomProvider = Provider.of<FavRoomsScreenProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -43,7 +43,7 @@ class WatchListScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               FutureBuilder<List<FavRoom>>(
-                future: roomApi.fetchFavRooms(userId),
+                future: Future.value(favRoomProvider.favRoomIdList),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -53,7 +53,8 @@ class WatchListScreen extends StatelessWidget {
                     return const Center(child: Text("No room found"));
                   } else {
                     final rooms = snapshot.data!;
-                    return _displayFavRooms(context, rooms, roomApi, provider);
+                    return _displayFavRooms(
+                        context, rooms, roomApi, favRoomProvider);
                   }
                 },
               ),
@@ -65,7 +66,7 @@ class WatchListScreen extends StatelessWidget {
   }
 
   SizedBox _displayFavRooms(BuildContext context, List<FavRoom> rooms,
-      RoomApi roomApi, FavRoomsScreenProvider provider) {
+      ConnectionApi roomApi, FavRoomsScreenProvider provider) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.68,
       child: GridView.builder(

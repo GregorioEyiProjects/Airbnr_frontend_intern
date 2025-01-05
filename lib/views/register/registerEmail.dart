@@ -258,7 +258,7 @@ class _RegisterWithEmailState extends State<RegisterWithEmail> {
             _dates[0] != DateTime.now()) {
           DateTime dateOfBirth = _dates[0]!;
           //final RoomApi roomApi = RoomApi();
-          final roomApi = locator<RoomApi>();
+          final roomApi = locator<ConnectionApi>();
 
           //print("date of birth: ${dateOfBirth}");
           /**/ await roomApi.registerUserWithEmail(

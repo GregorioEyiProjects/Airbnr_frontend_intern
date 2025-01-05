@@ -12,13 +12,13 @@ class MyObjectBox {
   late final Box<RoomOB> _roomBox;
   late final Box<UserOB> _userBox;
   late final Box<RoomLocationOB> locationBox;
-  late final Box<UserFavoriteRooms> userFavoriteRooms;
+  late final Box<UserFavOB> userFavoriteRooms;
 
   MyObjectBox._init(this._store) {
     _roomBox = Box<RoomOB>(_store);
     _userBox = Box<UserOB>(_store);
     locationBox = Box<RoomLocationOB>(_store);
-    userFavoriteRooms = Box<UserFavoriteRooms>(_store);
+    userFavoriteRooms = Box<UserFavOB>(_store);
     print('MyObjectBox initialized');
   }
 

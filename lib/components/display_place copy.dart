@@ -7,7 +7,6 @@ import 'package:airbnbr/model/room_model.dart';
 import 'package:airbnbr/model/user_login_model.dart';
 import 'package:airbnbr/provider/roomProvider.dart';
 import 'package:airbnbr/provider/user_fav_room_provider.dart';
-import 'package:airbnbr/views/home/room_details.dart';
 import 'package:flutter/material.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:go_router/go_router.dart';
@@ -43,25 +42,16 @@ class _DisplayPlaceState extends State<DisplayPlace> {
   Future<void> _fetchFavRooms() async {
     try {
       print(" DisplayPlace User ID: ${widget.userId}");
-      //final favRooms = await roomApi.fetchFavRooms(widget.userId ?? ''); // fetch from ObjectBox
+      final favRooms = await roomApi.fetchFavRooms(widget.userId ?? '');
 
-      final favRoomsProvider = Provider.of<FavRoomsScreenProvider>(context);
-
-      // This one creates a new instance of FavRoomsScreenProvider and calls the addFavRooms method on that new instance.
-      // And here i am storing the favorite rooms coming from the Backend in the provider
-      //Provider.of<FavRoomsScreenProvider>(context, listen: false).addFavRooms(favRooms);
-
-      // This one accesses an existing instance of FavRoomsScreenProvider from the widget tree using the Provider package.
-      //FavRoomsScreenProvider().addFavRooms(favRooms);
+      // Set the list i have in the provider with the list i have here
+      Provider.of<FavRoomsScreenProvider>(context, listen: false)
+          .addFavRooms(favRooms);
 
       setState(() {
         // Just store the room ID and the user ID in the list
-        favRoomIds =
-            favRoomsProvider.favRoomIdList.map((room) => room.roomId).toList();
-        print('DisplayPlace c favRoomIds: $favRoomIds');
-        favRoomUserIds =
-            favRoomsProvider.favRoomIdList.map((room) => room.userId).toList();
-        print('DisplayPlace setState favRoomUserIds: $favRoomUserIds');
+        favRoomIds = favRooms.map((room) => room.roomId).toList();
+        favRoomUserIds = favRooms.map((room) => room.userId).toList();
       });
     } catch (e) {
       print("Error fetching favorite rooms: $e");
@@ -109,13 +99,13 @@ class _DisplayPlaceState extends State<DisplayPlace> {
               itemCount: rooms.length,
               shrinkWrap: true,
               itemBuilder: (contex, index) {
-                // Get each room from the list
+                //
                 Room room = rooms[index];
-                //print('DisplayPlace RoomID: ${room.id}');
+                print('DisplayPlace RoomID: ${room.id}');
 
-                // Mark the room as favorite if the room ID is in the list
                 bool isFavorite = favRoomIds.contains(room.id);
                 bool isUserRoom = favRoomUserIds.contains(widget.userId);
+
                 print(
                     'DisplayPlace isFavorite: ${isFavorite}  and userId ${isUserRoom} ');
 
@@ -124,20 +114,10 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                   child: GestureDetector(
                     //Navigate to the room details screen
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RoomDetails(
-                            userId: widget.userId,
-                            room: room,
-                          ),
-                        ),
-                      );
-                      /* GoRouter.of(context).go(
+                      GoRouter.of(context).go(
                         '/room_details?userId=${widget.userId}',
                         extra: room,
-                      ) */
-                      ;
+                      );
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,9 +280,9 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                   FavRoom? favoriteRoom = faveRooms.firstWhere(
                     (favRoom) => favRoom.roomId == roomId,
                     orElse: () => FavRoom(
-                        roomName: '',
                         roomImages: [],
-                        id: '',
+                        roomName: '',
+                        id: ' ',
                         userId: '',
                         roomId: ''),
                   );
@@ -328,9 +308,9 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                     }
                   } else {
                     FavRoom newFavRoom = FavRoom(
-                        roomName: '',
                         roomImages: [],
-                        id: '',
+                        roomName: ' ',
+                        id: ' ',
                         userId: userId,
                         roomId: roomId);
                     await roomApi.addFavRoomToDB(userId, roomId, context);

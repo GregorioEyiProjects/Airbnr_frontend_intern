@@ -1,11 +1,15 @@
 import 'package:airbnbr/database/db.dart';
 import 'package:airbnbr/database/objectBoxDB.dart';
+import 'package:airbnbr/database/objectBox_helper.dart';
 import 'package:airbnbr/database/object_box_model/OBinit/MyObjectBox.dart';
+import 'package:airbnbr/database/object_box_model/entities/userFavRooms.dart';
 //import 'package:airbnbr/database/object_box_model/entities/User_O_Box.dart';
 //import 'package:airbnbr/database/object_box_model/entities/Room_Object_Box.dart';
 import 'package:airbnbr/injection_containert.dart';
+import 'package:airbnbr/model/fav_room_model.dart';
 //import 'package:airbnbr/model/fav_room_model.dart';
 import 'package:airbnbr/model/room_model.dart';
+import 'package:airbnbr/objectbox.g.dart';
 import 'package:airbnbr/provider/roomProvider.dart';
 //import 'package:airbnbr/model/user_login_model.dart';
 //import 'package:airbnbr/model/user_register_email.dart';
@@ -21,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:airbnbr/views/login/loginWithContact.dart';
 import 'package:airbnbr/views/register/registerEmail.dart';
 import 'package:go_router/go_router.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:objectbox/objectbox.dart';
@@ -28,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 late MyObjectBox objectBox;
 late Objectboxdb objectBoxdb;
+late ConnectionApi roomApi;
 
 void main() async {
   //Ensuring the user stays isLoggedIn after closing the app
@@ -35,8 +41,8 @@ void main() async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-  String? userIdShareP = prefs.getString('token');
-  String? userEmailShareP = prefs.getString('token_user_email');
+  String? userIdShareP = prefs.getString('user_contact_token');
+  String? userEmailShareP = prefs.getString('user_email_token');
 
   /* OBJECT BOX INIT */
   objectBoxdb = await Objectboxdb.getInstance();
@@ -47,12 +53,14 @@ void main() async {
   //Initialize the GetIt locator, which will be used to inject the RoomApi
   await setupLocator(objectBoxdb);
 
-  //Get all rooms from the database
-  RoomApi roomApi = locator<RoomApi>();
+  //Get all rooms from the Backend
+  roomApi = locator<ConnectionApi>();
   List<Room> listOfRooms = await roomApi.fetchAllRoom();
 
   ////To copy the list of room to the provider to be used in the app
   /// create: (context) => Roomprovider()..addRooms(listOfRooms)
+  /// The ".." Is call cascade notation and it creates an instance of RoomProvider and then calls the addRooms method on that instance.
+  /// This allows you to perform multiple operations on the same object
   runApp(
     MultiProvider(
       providers: [
@@ -60,7 +68,7 @@ void main() async {
         ChangeNotifierProvider(
             create: (context) => RoomProvider()..addRooms(listOfRooms)),
         Provider<Objectboxdb>.value(value: objectBoxdb),
-        Provider<RoomApi>(create: (context) => locator<RoomApi>()),
+        Provider<ConnectionApi>(create: (context) => locator<ConnectionApi>()),
       ],
       //create: (context) => FavRoomsScreenProvider(),
       child: MyApp(
@@ -200,9 +208,41 @@ class _MyRouterState extends State<MyRouter> {
                 child: const LoginWithContact(userContact: null),
               );
             }
-            print('Main MyRouter User_ID?: ${userId}');
+            print('Main MyRouter c: ${userId}');
+
             return MaterialPage(
-              child: HomeScreen(userId: userId),
+              child: FutureBuilder<List<FavRoom>>(
+                future: roomApi.fetchFavRooms(userId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    //print('Main MyRouter favUserRooms has error');
+                    return const Center(
+                      child: Text('An error occurred!'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    print('Main MyRouter favUserRooms is empty');
+                    return HomeScreen(userId: userId);
+                  } else {
+                    final favUserRooms = snapshot.data!;
+                    print('Main MyRouter favUserRooms: ${favUserRooms}');
+                    //Add the favorite rooms to the Local DB (ObjectBox)
+                    //only if the the backend has returned the favorite rooms
+                    // Use post-frame callback to add favorite rooms to the Local DB (ObjectBox) when the widget is built
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      addFavRoomToOB(context, favUserRooms);
+                      // Retrieve the user's favorite rooms from ObjectBox if there are any
+                      retrieveFavRooms(context, userId);
+                    });
+                    // Retrieve the user's favorite rooms from objextBox if there are any
+                    //retrieveFavRooms(context, userId);
+                    return HomeScreen(userId: userId);
+                  }
+                },
+              ),
             );
           },
         ),

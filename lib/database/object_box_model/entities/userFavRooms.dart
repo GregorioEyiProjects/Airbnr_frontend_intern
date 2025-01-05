@@ -1,21 +1,34 @@
+import 'package:airbnbr/components/star_rating.dart';
 import 'package:airbnbr/database/object_box_model/entities/RoomOBModel.dart';
 import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
+import 'package:airbnbr/main.dart';
+import 'package:airbnbr/model/fav_room_model.dart';
+import 'package:airbnbr/objectbox.g.dart';
+import 'package:airbnbr/provider/user_fav_room_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
+import 'package:provider/provider.dart';
 
 @Entity()
-class UserFavoriteRooms {
+class UserFavOB {
   @Id(assignable: true)
-  int? id; // Unique ID for UserFavRoom
+  int? id;
+  String mongosFavRoomId; // Room name as a property
 
   // Store the IDs of the user and room
-  final int userId;
-  final int roomId;
+  final String roomName;
+  final String userId;
+  final String roomId;
+  final List<String> roomImages;
   DateTime createdAt;
 
-  UserFavoriteRooms({
+  UserFavOB(
     this.id,
+    this.createdAt, {
+    required this.mongosFavRoomId,
+    required this.roomName,
     required this.userId,
     required this.roomId,
-    required this.createdAt,
+    required this.roomImages,
   });
 }

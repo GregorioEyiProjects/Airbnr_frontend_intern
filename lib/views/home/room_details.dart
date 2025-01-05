@@ -234,7 +234,8 @@ class _RoomDetailsState extends State<RoomDetails> {
                 //Arrow back button to the home screen
                 GestureDetector(
                   onTap: () {
-                    GoRouter.of(context).go('/home_screen');
+                    Navigator.pop(context);
+                    //GoRouter.of(context).go('/home_screen');
                   },
                   child: const IconCustomButton(
                     icon: Icons.arrow_back_ios_new,
@@ -255,7 +256,7 @@ class _RoomDetailsState extends State<RoomDetails> {
                     final userID = widget.userId;
                     //RoomApi roomApi = RoomApi();
                     //final roomApi = locator<RoomApi>();
-                    final roomApi = locator<RoomApi>();
+                    final roomApi = locator<ConnectionApi>();
 
                     print('RoomDetails Room ID: $roomID, User ID: $userID');
 
@@ -264,8 +265,13 @@ class _RoomDetailsState extends State<RoomDetails> {
                         final response = await roomApi.fetchFavRooms(userID!);
                         FavRoom? favRoom = response.firstWhere(
                           (element) => element.roomId == roomID,
-                          orElse: () =>
-                              FavRoom([], '', id: ' ', userId: '', roomId: ''),
+                          orElse: () => FavRoom(
+                            roomName: '',
+                            roomImages: [],
+                            id: ' ',
+                            userId: '',
+                            roomId: '',
+                          ),
                         );
 
                         if (favRoom.id != ' ') {
@@ -279,8 +285,12 @@ class _RoomDetailsState extends State<RoomDetails> {
                         }
                       } else {
                         //Create a new favorite room to add it to the provider list
-                        FavRoom newFavRoom = FavRoom([], ' ',
-                            id: ' ', userId: userID!, roomId: roomID);
+                        FavRoom newFavRoom = FavRoom(
+                            roomName: ' ',
+                            roomImages: [],
+                            id: ' ',
+                            userId: userID!,
+                            roomId: roomID);
 
                         //remove the room from the database
                         await provider.addFavRoomInDB(userID!, roomID, context);

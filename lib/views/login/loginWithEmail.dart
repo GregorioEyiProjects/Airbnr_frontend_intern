@@ -92,7 +92,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
                     try {
                       //final RoomApi roomApi = RoomApi();
                       //final roomApi = locator<RoomApi>();
-                      final roomApi = locator<RoomApi>();
+                      final roomApi = locator<ConnectionApi>();
                       await roomApi.loginWithEmail(
                           emailController.text, context);
                       //GoRouter.of(context).go('/home_screen', extra: userLogin.id);

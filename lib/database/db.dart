@@ -20,7 +20,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/room_model.dart';
 
-class RoomApi {
+class ConnectionApi {
   final String baseUrl;
   late final String apiUrlrooms;
   late final String addFavRoom;
@@ -36,7 +36,7 @@ class RoomApi {
   // For physical device " http://192.168.1.166:3000/api/v1/"
   // For virtual device " http://10.0.2.2:3000/api/v1/"
 
-  RoomApi(this.objectboxdb) : baseUrl = 'http://10.0.2.2:3000/api/v1/' {
+  ConnectionApi(this.objectboxdb) : baseUrl = 'http://10.0.2.2:3000/api/v1/' {
     print('RoomApi initialized');
 
     apiUrlrooms = '${baseUrl}rooms/allRooms';
@@ -161,7 +161,7 @@ class RoomApi {
       String token = userData['_id'];
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      await prefs.setString('token', token);
+      await prefs.setString('user_contact_token', token);
       await prefs.setBool('isLoggedIn', true);
 
       print("DB userID token ${prefs.getString('token')}");
@@ -286,13 +286,13 @@ class RoomApi {
       final userData = jsonResponse['user'];
 
       String userId = jsonResponse['user']['_id'];
-      String userEmail = jsonResponse['user']['email'];
+      //String userEmail = jsonResponse['user']['email'];
 
       //print('DB userEmail: $userEmail & userID $userId in loginWithEmail');
 
       //Save data in shared preferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token_user_email', userEmail);
+      await prefs.setString('user_email_token', userId);
       await prefs.setBool('isLoggedIn', true);
 
       //print("DB userEmail token ${prefs.getString('token_user_email')} in loginWithEmail");
@@ -555,7 +555,7 @@ class RoomApi {
     final response = await http.get(Uri.parse(urlFaveRooms), headers: {
       'Content-Type': 'application/json',
     });
-    print('fetchFavRooms Respose: ${response.body}');
+    print('fetchFavRooms Respose body: ${response.body}');
     if (response.statusCode == 200) {
       List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse.map((favRoom) => FavRoom.fromJson(favRoom)).toList();
