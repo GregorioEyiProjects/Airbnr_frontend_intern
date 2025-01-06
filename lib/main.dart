@@ -128,6 +128,7 @@ class _MyRouterState extends State<MyRouter> {
   @override
   void initState() {
     super.initState();
+
     print(
         'Main Router initState: isLoggedIn=${widget.isLoggedIn}, userIdRouter=${widget.userIdRouter}, userEmailRouter=${widget.userEmailRouter}');
 
@@ -185,6 +186,10 @@ class _MyRouterState extends State<MyRouter> {
             //ObjectBox
             //Stream<List<User>> streamUser = objectBox.getUsers();
             //Stream<List<RoomOB>> streamRooms = objectBox.getRooms();
+/*             final faProviderLength =
+                Provider.of<FavRoomsScreenProvider>(context).favRoomIdList;
+            print(
+                'Main Router initState: favProviderLength=${faProviderLength.length}'); */
 
             final userIdFromLogin = state.extra as String?;
             //which id to use when is logged in (contact or email)
@@ -233,8 +238,10 @@ class _MyRouterState extends State<MyRouter> {
                     //only if the the backend has returned the favorite rooms
                     // Use post-frame callback to add favorite rooms to the Local DB (ObjectBox) when the widget is built
                     WidgetsBinding.instance.addPostFrameCallback((_) {
+                      // Add the favorite rooms to the Local DB (ObjectBox)
                       addFavRoomToOB(context, favUserRooms);
                       // Retrieve the user's favorite rooms from ObjectBox if there are any
+                      //And add them to the provider as well
                       retrieveFavRooms(context, userId);
                     });
                     // Retrieve the user's favorite rooms from objextBox if there are any

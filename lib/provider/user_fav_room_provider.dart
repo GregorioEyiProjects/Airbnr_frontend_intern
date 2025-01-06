@@ -4,6 +4,7 @@ import 'package:airbnbr/model/fav_room_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FavRoomsScreenProvider extends ChangeNotifier {
   List<FavRoom> _favRoomIds = [];
@@ -16,7 +17,7 @@ class FavRoomsScreenProvider extends ChangeNotifier {
       print('FavRoomsScreenProvider - Removed: ${favRoom.roomId}');
     } else {
       _favRoomIds.add(favRoom);
-      print('Added to favorites: ${favRoom.roomId}');
+      print('FavRoomsScreenProvider - Added to favorites: ${favRoom.roomId}');
     }
     notifyListeners();
   }
@@ -40,7 +41,8 @@ class FavRoomsScreenProvider extends ChangeNotifier {
 //to remove the favorite room and display the updated list
   void removeFavorite(String roomId) {
     _favRoomIds.removeWhere((favRoom) => favRoom.roomId == roomId);
-    print('Current favorites after removal: $_favRoomIds');
+    print(
+        'FavRoomsScreenProvider - Current favorites after removal: $_favRoomIds');
     notifyListeners();
   }
 
@@ -57,29 +59,33 @@ class FavRoomsScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteFavRoomInDB(String userID, String roomID, context) async {
+  Future<http.Response> deleteFavRoomInDB(
+      String userID, String favRoomID, context) async {
     try {
       //RoomApi roomApi = RoomApi();
       final roomApi = locator<ConnectionApi>();
 
-      final response = await roomApi.deleteFavRoom(userID, roomID, context);
+      final response = await roomApi.deleteFavRoom(favRoomID, userID, context);
       if (response.statusCode == 200) {
 //        removeFavorite(roomID);
         notifyListeners();
       } else {
-        print('Failed to delete room from favorites.');
+        print('FavRoomsScreenProvider - Failed to delete room from favorites.');
       }
+      return response;
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+      //notifyListeners();
+      rethrow;
     }
-    notifyListeners();
   }
 
   //Clear the favorite rooms list when the user logs out
   void clearFavRooms() {
     _favRoomIds.clear();
+    print('FavRoomsScreenProvider - Cleared favorites: ${_favRoomIds.length}');
     notifyListeners();
   }
 }

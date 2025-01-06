@@ -78,7 +78,7 @@ class WatchListScreen extends StatelessWidget {
         itemCount: rooms.length,
         itemBuilder: (context, index) {
           final room = rooms[index];
-          print("WatchList  id is in user_fav_screen: ${room.id}");
+          print("WatchList  fav user room is: ${room.id}");
           return Stack(
             children: [
               Container(
@@ -98,8 +98,9 @@ class WatchListScreen extends StatelessWidget {
                     //User the provider later on
                     print(
                         'WatchList ID- for deleting: ${room.id} user: $userId');
-                    final response =
-                        await roomApi.deleteFavRoom(userId, room.id, context);
+                    //final response = await roomApi.deleteFavRoom(userId, room.id, context);
+                    final response = await provider.deleteFavRoomInDB(
+                        room.id, userId, context);
 
                     if (response.statusCode == 200) {
                       //provider.toggleFavorite(room.id);

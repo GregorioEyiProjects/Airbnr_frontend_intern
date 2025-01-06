@@ -286,70 +286,97 @@ class _DisplayPlaceState extends State<DisplayPlace> {
                     : Colors.white,
                 size: 30,
               ),
-              InkWell(
-                onTap: () async {
-                  //room ID coming from the DB Room schema
-                  final String roomId = room.id;
-
-                  print('Room ID: $roomId' ' : User ID: $userId');
-
-                  //final roomApi = RoomApi();
-
-                  List<FavRoom> faveRooms = await roomApi.fetchFavRooms(userId);
-
-                  FavRoom? favoriteRoom = faveRooms.firstWhere(
-                    (favRoom) => favRoom.roomId == roomId,
-                    orElse: () => FavRoom(
-                        roomName: '',
-                        roomImages: [],
-                        id: '',
-                        userId: '',
-                        roomId: ''),
-                  );
-
-                  // delete the room from the favorite list if it exists
-                  if (favoriteRoom.roomId == roomId) {
-                    print("favoriteRoom ID: ${favoriteRoom.id}");
-
-                    final response = await roomApi.deleteFavRoom(
-                        userId, favoriteRoom.id, context);
-                    if (response.statusCode == 200) {
-                      // set the new state in the DB here
-                      provider.removeFavorite(roomId);
-                      //provider.removeFavorite(favoriteRoom.roomId);
-                      print(
-                          'Display_Place roomID about to be deleted : ${favoriteRoom.id}');
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("Failed to delete from favorites")),
-                      );
-                      print('Failed to delete room from favorites.');
-                    }
-                  } else {
-                    FavRoom newFavRoom = FavRoom(
-                        roomName: '',
-                        roomImages: [],
-                        id: '',
-                        userId: userId,
-                        roomId: roomId);
-                    await roomApi.addFavRoomToDB(userId, roomId, context);
-                    print("What is the newFavRoom: $roomId");
-                    provider.toggleFavorite(newFavRoom);
-                  }
-                },
-                child: Icon(
-                  Icons.favorite,
-                  color: isFavorite == true && isUserRoom == true ||
-                          provider.isExist(room.id)
-                      ? Colors.red
-                      : Colors.black26,
-                  size: 30,
-                ),
-              ),
+              _addOrRemoveFavRoomInkWell(
+                  room, userId, provider, context, isFavorite, isUserRoom),
             ],
           ),
         ],
+      ),
+    );
+  }
+
+// Add or remove the room from the favorite list from the Local DB, the provider, the UI, and the Backend
+  InkWell _addOrRemoveFavRoomInkWell(
+      Room room,
+      String userId,
+      FavRoomsScreenProvider provider,
+      BuildContext context,
+      bool isFavorite,
+      bool isUserRoom) {
+    return InkWell(
+      onTap: () async {
+        //room ID coming from the DB Room schema
+        final String roomId = room.id;
+
+        print('Room ID: $roomId' ' : User ID: $userId');
+
+        //final roomApi = RoomApi();
+
+        //List<FavRoom> faveRooms = await roomApi.fetchFavRooms(userId);
+
+        //Get the favorite rooms from the provider
+        List<FavRoom> faveRoomsProvider = provider.favRoomIdList;
+
+        if (faveRoomsProvider.isNotEmpty) {
+          print(
+              'DisplayPlace - faveRoomsProvider rooms and room ID is: ${faveRoomsProvider.first.id}');
+        } else {
+          print('DisplayPlace - faveRoomsProvider is empty');
+        }
+        FavRoom? favoriteRoom = faveRoomsProvider.firstWhere(
+          (favRoom) => favRoom.roomId == roomId,
+          orElse: () => FavRoom(
+              roomName: '', roomImages: [], id: '', userId: '', roomId: ''),
+        );
+
+        // delete the room from the favorite list if it exists
+        if (favoriteRoom.roomId == roomId) {
+          print("favoriteRoom ID: ${favoriteRoom.id}");
+
+          //final response = await roomApi.deleteFavRoom(userId, favoriteRoom.id, context);
+
+          //Delete the room from the DB using the provider
+          provider.deleteFavRoomInDB(favoriteRoom.id, userId, context).then(
+            (response) {
+              if (response.statusCode == 200) {
+                // set the new state in the DB here
+                provider.removeFavorite(roomId);
+                //provider.removeFavorite(favoriteRoom.roomId);
+                print(
+                    'Display_Place roomID about to be deleted : ${favoriteRoom.id}');
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("Failed to delete from favorites")),
+                );
+                print('Failed to delete room from favorites.');
+              }
+            },
+          ).catchError(
+            (error) {
+              print('Error deleting favorite room: $error');
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                      'An error occurred while deleting the favorite room.'),
+                ),
+              );
+            },
+          );
+        } else {
+          //await roomApi.addFavRoomToDB(userId, roomId, context);
+          await provider.addFavRoomInDB(userId, roomId, context);
+          print("DisplayPlace - What is the newFavRoom: $roomId");
+          //provider.toggleFavorite(newFavRoom);
+        }
+      },
+      child: Icon(
+        Icons.favorite,
+        color: isFavorite == true && isUserRoom == true ||
+                provider.isExist(room.id)
+            ? Colors.red
+            : Colors.black26,
+        size: 30,
       ),
     );
   }

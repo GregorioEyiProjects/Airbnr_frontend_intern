@@ -1,7 +1,6 @@
 import 'dart:convert';
 //import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 import 'package:airbnbr/database/objectBoxDB.dart';
-import 'package:airbnbr/database/objectBox_helper.dart';
 import 'package:airbnbr/database/object_box_model/OBinit/MyObjectBox.dart';
 import 'package:airbnbr/database/object_box_model/entities/RoomOBModel.dart';
 import 'package:airbnbr/database/object_box_model/entities/UserOBModel.dart';
@@ -169,20 +168,14 @@ class ConnectionApi {
 
       String userId = userData['_id'];
 
-      //Get the user data from the response
-      final user = UserLogin.fromJson(userData);
-
-      //insert the user in the ObjectBox if he does not already exist
-      await insertUserComingFromBackendLocally(context, user);
-
       //print('DB JSO_Response_id: ${userId}');
-      /* ObjectBox STARTS 
-      //I have to create a method to insert the user in the ObjectBox
+
+      /* ObjectBox STARTS */ // I have to create a method to insert the user in the ObjectBox
 
       //Get the store variable
       Store store = objectboxdb.store;
 
-
+      final user = UserLogin.fromJson(userData);
       //print('DB - loginWithContact_ UserLogin fromJSOn: $user');
       final user_ = UserOB(
         mongoUserId: user.id,
@@ -242,7 +235,7 @@ class ConnectionApi {
       final userInserted = store.box<UserOB>().get(userIDob);
       //print('DB - loginWithContact_ inserted firstName: ${userInserted!.firstName}');
 
-      ObjectBox ENDS */
+      /* ObjectBox ENDS */
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Welcome back!")),
@@ -302,15 +295,9 @@ class ConnectionApi {
       await prefs.setString('user_email_token', userId);
       await prefs.setBool('isLoggedIn', true);
 
-      //Get the user data from the response
-      final user = UserLogin.fromJson(userData);
-
-      //Insert the user in the ObjectBox
-      await insertUserComingFromBackendLocally(context, user);
-
       //print("DB userEmail token ${prefs.getString('token_user_email')} in loginWithEmail");
 
-      /* ObjectBox STARTS 
+      /* ObjectBox STARTS */
 
       //Get the store variable
       Store store = objectboxdb.store;
@@ -371,10 +358,10 @@ class ConnectionApi {
       }
 
       //Get the user
-      //final userInserted = store.box<UserOB>().get(userIDob);
+      final userInserted = store.box<UserOB>().get(userIDob);
       //print('DB - loginWithEmail inserted firstName: ${userInserted!.firstName}');
 
-     ObjectBox ENDS */
+      /* ObjectBox ENDS */
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Welcome back!")),
@@ -421,11 +408,10 @@ class ConnectionApi {
       final rooms =
           jsonResponse.map((roomJson) => Room.fromJson(roomJson)).toList();
 
-      //insert all the rooms in the ObjectBox
-      await inserAllRoomsComingFromBackendLocally(rooms);
+      //create a room object to be inserted in the ObjectBox
+      Store store = objectboxdb.store;
 
       //Get the existing roomsId from the ObjectBox and converting them to a Set
-      /* OBJECT BOX STARTS 
       final existingRooms = objectboxdb.store
           .box<RoomOB>()
           .getAll()
@@ -478,7 +464,23 @@ class ConnectionApi {
         }
       });
 
-       OBJECT BOX ENDS */
+      //Checking if the there is data in the ObjectBox
+      //final existingRooms = await box.getRooms().first; // it returns a list
+      //final existingRoomIds = existingRooms.map((room) => room.mongoRoomId).toSet();
+
+      // Add data to the  ObjectBox
+      /*  for (var roomJson in jsonResponse) {
+        //
+        final room = Room.fromJson(roomJson); // room to compare
+        //final roomOB = RoomOB.fromJson(roomJson, box.locationBox); // room to insert
+        if (existingRoomIds.contains(room.id)) {
+          debugPrint('Room already exists in the ObjectBox');
+        } else {
+          //await box.insertRoom(roomOB);
+        }
+      } */
+
+      //print("BD rooms coming from LOCAL DEVIDE ${box.getRooms()}");
 
       return jsonResponse.map((roomJson) => Room.fromJson(roomJson)).toList();
     } else {
@@ -513,6 +515,40 @@ class ConnectionApi {
     }
   } */
 
+//Used in DisplayPlace.dart
+  Future<void> addFavRoomToDB(String userId, String roomId, context) async {
+    final response = await http.post(
+      Uri.parse(addFavRoom),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        'userId': userId,
+        'roomId': roomId,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      //Get the response message
+      final jsonResponse = jsonDecode(response.body);
+      final message = jsonResponse['message'];
+      print("DB - addFavRoomToDB message: $message");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(color: Colors.black, fontSize: 18),
+          ),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to add to favorites")),
+      );
+    }
+  }
+
   Future<List<FavRoom>> fetchFavRooms(String userId) async {
     print("fetchFavRooms userId: $userId");
     final urlFaveRooms = "${getFavRooms}${userId}";
@@ -528,55 +564,33 @@ class ConnectionApi {
     }
   }
 
-//Used in DisplayPlace.dart
-  Future<void> addFavRoomToDB(String userId, String roomId, context) async {
-    final response = await http.post(
-      Uri.parse(addFavRoom),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode({
-        'userId': userId,
-        'roomId': roomId,
-      }),
-    );
-
-    final jsonResponse = jsonDecode(response.body);
-    final message_ = jsonResponse['message'];
-
-    if (response.statusCode == 201) {
-      //Get the response message
-      //final message = jsonResponse['message'];
-      final data = jsonResponse['data'];
-
-      print("DB - addFavRoomToDB data: $data");
-
-      //Extract the data from the response and convert it to a FavRoom object
-      final favRoom = FavRoom.fromJson(data);
-
-      //Insert the fav room in the ObjectBox
-      addNewFavRoom(context, favRoom);
-      print("DB - addFavRoomToDB data id of the fav room added: ${favRoom.id}");
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            message_,
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
-          backgroundColor: Colors.green,
-        ),
-      );
+/*   Future<List<Room>> fetchFavRoomsCopy(String userId) async {
+    final urlFaveRooms = "${getFavRooms}${userId}";
+    print('API url: ${urlFaveRooms}');
+    final response = await http.get(Uri.parse(urlFaveRooms));
+    print('API fav response: ${response.body}');
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((favRoom) => Room.fromJson2(favRoom)).toList();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          message_,
-          style: TextStyle(color: Colors.white, fontSize: 15),
-        ),
-        backgroundColor: Colors.red,
-      ));
+      throw Exception('Failed to load rooms');
+    }
+  } 
+
+  Future<List<FavRoom>> fetchFavRoomsCopy2(String userId) async {
+    final urlFaveRooms = "${getFavRooms}${userId}";
+    final response = await http.get(Uri.parse(urlFaveRooms));
+    print('fetchAllFavRoomsRespose: ${response.body}');
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((favRoom) => FavRoom.fromJson(favRoom)).toList();
+    } else {
+      throw Exception('Failed to load rooms');
     }
   }
+  
+  
+  */
 
 //DELETE
   Future<http.Response> deleteFavRoom(
@@ -588,23 +602,21 @@ class ConnectionApi {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode({'favRoomId': favRoomId, 'userId': userId}),
+        body: jsonEncode({
+          'userId': userId,
+          'favRoomId': favRoomId,
+        }),
       );
       if (response.statusCode == 200) {
         //Get the response message
         final jsonResponse = jsonDecode(response.body);
         final message = jsonResponse['message'];
 
-        print('DELETE message from backend: $message');
-
-        //Delete the fav room from the ObjectBox
-        await deleteFavRoomFromOB(context, userId, favRoomId);
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
               message,
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             backgroundColor: Colors.red,
           ),

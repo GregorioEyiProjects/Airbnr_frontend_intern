@@ -250,69 +250,74 @@ class _RoomDetailsState extends State<RoomDetails> {
                 ),
                 const SizedBox(width: 20),
                 //Favorite button
-                InkWell(
-                  onTap: () async {
-                    final roomID = widget.room.id;
-                    final userID = widget.userId;
-                    //RoomApi roomApi = RoomApi();
-                    //final roomApi = locator<RoomApi>();
-                    final roomApi = locator<ConnectionApi>();
-
-                    print('RoomDetails Room ID: $roomID, User ID: $userID');
-
-                    try {
-                      if (provider.isExist(roomID)) {
-                        final response = await roomApi.fetchFavRooms(userID!);
-                        FavRoom? favRoom = response.firstWhere(
-                          (element) => element.roomId == roomID,
-                          orElse: () => FavRoom(
-                            roomName: '',
-                            roomImages: [],
-                            id: ' ',
-                            userId: '',
-                            roomId: '',
-                          ),
-                        );
-
-                        if (favRoom.id != ' ') {
-                          print(
-                              'RoomDetails Room_ID: $roomID, User ID: $userID');
-                          //remove the room from the database
-                          await provider.deleteFavRoomInDB(
-                              userID!, favRoom.id, context);
-                          //remove the room from the provider list
-                          provider.removeFavorite(roomID);
-                        }
-                      } else {
-                        //Create a new favorite room to add it to the provider list
-                        FavRoom newFavRoom = FavRoom(
-                            roomName: ' ',
-                            roomImages: [],
-                            id: ' ',
-                            userId: userID!,
-                            roomId: roomID);
-
-                        //remove the room from the database
-                        await provider.addFavRoomInDB(userID!, roomID, context);
-
-                        //add the room to the provider list
-                        provider.toggleFavorite(newFavRoom);
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
-                  },
-                  child: Icon(Icons.favorite,
-                      color: provider.isExist(widget.room.id!)
-                          ? Colors.red
-                          : Colors.white,
-                      size: 35),
-                )
+                _handleFavIconInkWell(provider, context)
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+
+  InkWell _handleFavIconInkWell(
+      FavRoomsScreenProvider provider, BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        final roomID = widget.room.id;
+        final userID = widget.userId;
+        //RoomApi roomApi = RoomApi();
+        //final roomApi = locator<RoomApi>();
+        //final roomApi = locator<ConnectionApi>();
+
+        print('RoomDetails Room ID: $roomID, User ID: $userID');
+
+        try {
+          if (provider.isExist(roomID)) {
+            //Get the favorite rooms from the provider
+            List<FavRoom> faveRoomsProvider = provider.favRoomIdList;
+
+            if (faveRoomsProvider.isNotEmpty) {
+              print(
+                  'DisplayPlace - faveRoomsProvider rooms and room ID is: ${faveRoomsProvider.first.id}');
+            } else {
+              print('DisplayPlace - faveRoomsProvider is empty');
+            }
+            //final response = await roomApi.fetchFavRooms(userID!);
+            FavRoom? favRoom = faveRoomsProvider.firstWhere(
+              (element) => element.roomId == roomID,
+              orElse: () => FavRoom(
+                roomName: '',
+                roomImages: [],
+                id: ' ',
+                userId: '',
+                roomId: '',
+              ),
+            );
+
+            if (favRoom.id != ' ') {
+              print('RoomDetails Room_ID: $roomID, User ID: $userID');
+              //remove the room from the database
+              final response = await provider.deleteFavRoomInDB(
+                  favRoom.id, userID!, context);
+              if (response.statusCode == 200) {
+                //remove the room from the provider list
+                provider.removeFavorite(roomID);
+              }
+            }
+          } else {
+            //remove the room from the database
+            await provider.addFavRoomInDB(userID!, roomID, context);
+
+            //add the room to the provider list
+            //provider.toggleFavorite(newFavRoom);
+          }
+        } catch (e) {
+          print(e);
+        }
+      },
+      child: Icon(Icons.favorite,
+          color: provider.isExist(widget.room.id!) ? Colors.red : Colors.white,
+          size: 35),
     );
   }
 

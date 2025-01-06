@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class UserFavOB {
   @Id(assignable: true)
   int? id;
-  String mongosFavRoomId; // Room name as a property
+  String mongosFavRoomId; // MongoDB ID
 
   // Store the IDs of the user and room
   final String roomName;
