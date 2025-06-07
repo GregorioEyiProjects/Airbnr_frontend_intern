@@ -34,7 +34,6 @@ assets/               # Images, icons, SVGs
 android/              # Android platform code
 ios/                  # iOS platform code
 web/                  # Web platform code
-test/                 # Unit and widget tests
 ```
 
 ## Getting Started
