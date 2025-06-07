@@ -108,5 +108,6 @@ See [`pubspec.yaml`](pubspec.yaml) for the full list, including:
 This project is for educational purposes.
 
 ---
+## Author
 
-For more details, see the [Flutter documentation](https://docs.flutter.dev/).
+Gregorio Eyi (GP) 
