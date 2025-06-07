@@ -42,88 +42,90 @@ class _RoomDetailsState extends State<RoomDetails> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _roomImages(size, widget.userId, context),
-            roomInfoBellowImages(size),
-            widget.room.active == true
-                ? _activeContainerTrue()
-                : _activeContainerFalse(),
-            SizedBox(height: size.height * 0.02),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _propertyInfo(
-                      size,
-                      'https://i.pinimg.com/originals/14/96/03/149603e24cfdd7db3ea0597bcff78359.png',
-                      'This is rare to find',
-                      "${widget.room.vendorName}'s place is usually fully booked."),
-                  _propertyInfo(
-                      size,
-                      widget.room.authorImage ??
-                          'https://cdn1.iconfinder.com/data/icons/user-interface-664/24/User-512.png',
-                      'Room in a rental unit',
-                      "Your own room in the house, plus \naccess to share places."),
-                  _propertyInfo(
-                      size,
-                      'https://cdn-icons-png.flaticon.com/512/6192/6192020.png',
-                      'Stay with ${widget.room.vendorName}',
-                      "Superhot. ${widget.room.yearsHosting} years hosting."),
-                  _propertyInfo(
-                      size,
-                      'https://cdn0.iconfinder.com/data/icons/co-working/512/coworking-sharing-17-512.png',
-                      'Share common spaces',
-                      "You'll share part of the house with \nthe host."),
-                  SizedBox(height: size.height * 0.02),
-                  const Divider(),
-                  const Text(
-                    'About this place',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    widget.room.description,
-                    maxLines: 10,
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _roomImages(size, widget.userId, context),
+              roomInfoBellowImages(size),
+              widget.room.active == true
+                  ? _activeContainerTrue()
+                  : _activeContainerFalse(),
+              SizedBox(height: size.height * 0.02),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _propertyInfo(
+                        size,
+                        'https://i.pinimg.com/originals/14/96/03/149603e24cfdd7db3ea0597bcff78359.png',
+                        'This is rare to find',
+                        "${widget.room.vendorName}'s place is usually fully booked."),
+                    _propertyInfo(
+                        size,
+                        widget.room.authorImage ??
+                            'https://cdn1.iconfinder.com/data/icons/user-interface-664/24/User-512.png',
+                        'Room in a rental unit',
+                        "Your own room in the house, plus \naccess to share places."),
+                    _propertyInfo(
+                        size,
+                        'https://cdn-icons-png.flaticon.com/512/6192/6192020.png',
+                        'Stay with ${widget.room.vendorName}',
+                        "Superhot. ${widget.room.yearsHosting} years hosting."),
+                    _propertyInfo(
+                        size,
+                        'https://cdn0.iconfinder.com/data/icons/co-working/512/coworking-sharing-17-512.png',
+                        'Share common spaces',
+                        "You'll share part of the house with \nthe host."),
+                    SizedBox(height: size.height * 0.02),
+                    const Divider(),
+                    const Text(
+                      'About this place',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                  const Divider(),
-                  const Text(
-                    "Where you'll be",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.room.city,
-                    style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black),
-                  ),
-                  SizedBox(
-                    height: 400,
-                    width: size.height,
-                    child:
-                        const Center(), //Descriptionlocation(location: widget.room['location']), //change this later on
-                  ),
-                  const SizedBox(height: 50),
-                ],
+                    Text(
+                      widget.room.description,
+                      maxLines: 10,
+                      style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    const Divider(),
+                    const Text(
+                      "Where you'll be",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Text(
+                      widget.room.city,
+                      style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
+                    ),
+                    SizedBox(
+                      height: 400,
+                      width: size.height,
+                      child:
+                          const Center(), //Descriptionlocation(location: widget.room['location']), //change this later on
+                    ),
+                    const SizedBox(height: 50),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: _reserverRoon(size),

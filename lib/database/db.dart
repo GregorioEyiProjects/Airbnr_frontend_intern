@@ -34,11 +34,15 @@ class ConnectionApi {
   late final Objectboxdb objectboxdb;
   //late MyObjectBox box;
 
-  // For physical device " http://192.168.1.166:3000/api/v1/"
+  // 3000 or 4000
+
+  // For physical device " http://192.168.1.187:3000/api/v1/"
+  // For physical device " http://3.25.117.11:3000/api/v1/"
   // For virtual device " http://10.0.2.2:3000/api/v1/"
 
-  ConnectionApi(this.objectboxdb) : baseUrl = 'http://10.0.2.2:3000/api/v1/' {
-    print('RoomApi initialized');
+  ConnectionApi(this.objectboxdb)
+      : baseUrl = 'http://192.168.1.189:3000/api/v1/' {
+    debugPrint('RoomApi initialized');
 
     apiUrlrooms = '${baseUrl}rooms/allRooms';
     addFavRoom = '${baseUrl}user/addFavRoom';

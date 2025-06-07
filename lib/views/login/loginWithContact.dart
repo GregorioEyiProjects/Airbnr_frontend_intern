@@ -65,9 +65,9 @@ class _LoginWithContactState extends State<LoginWithContact> {
                   child: const Column(
                     children: [
                       Text(
-                        "Welcome to Airbnb",
+                        "Welcome to Airbnb replica",
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       )

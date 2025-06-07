@@ -1,0 +1,2 @@
+/Users/macbookpro/Desktop/Internship/Week 3/airbnbr-frontend/android/app/.cxx/Debug/4m2a6ogg/x86/CMakeFiles/edit_cache.dir
+/Users/macbookpro/Desktop/Internship/Week 3/airbnbr-frontend/android/app/.cxx/Debug/4m2a6ogg/x86/CMakeFiles/rebuild_cache.dir

@@ -95,7 +95,7 @@ class _PState extends State<ProfileScreen> {
                 const Text(
                   "Settings",
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -315,7 +315,7 @@ class _PState extends State<ProfileScreen> {
             children: [
               Icon(
                 icon,
-                size: 30,
+                size: 25,
                 color: Colors.black54,
               ),
               const SizedBox(
@@ -324,7 +324,7 @@ class _PState extends State<ProfileScreen> {
               Text(
                 name,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: Colors.black54,
                   fontWeight: FontWeight.bold,
                 ),

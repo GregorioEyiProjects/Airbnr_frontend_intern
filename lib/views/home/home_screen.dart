@@ -83,10 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
               label: "Trips",
             ),
             BottomNavigationBarItem(
-              icon: Image.network(
-                'https://cdn.icon-icons.com/icons2/2770/PNG/512/message_dots_icon_176716.png',
-                height: 24,
-                color: _selectedIndex == 3 ? Colors.pink : Colors.black12,
+              icon: ImageIcon(
+                AssetImage('assets/icon/message.png'),
               ),
               label: "Messages",
             ),

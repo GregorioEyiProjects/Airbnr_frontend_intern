@@ -40,7 +40,7 @@ class _UserSettingsState extends State<UserSettings> {
             const Text(
               "Personal info",
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 18,
                 color: Colors.black87,
                 fontWeight: FontWeight.bold,
               ),
@@ -85,7 +85,7 @@ class _UserSettingsState extends State<UserSettings> {
               Text(
                 header,
                 style: const TextStyle(
-                  fontSize: 21,
+                  fontSize: 18,
                   color: Colors.black,
                   letterSpacing: 0.5,
                   height: 1,
@@ -95,7 +95,7 @@ class _UserSettingsState extends State<UserSettings> {
               Text(
                 subheader,
                 style: const TextStyle(
-                  fontSize: 19,
+                  fontSize: 16,
                   color: Colors.black38,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
