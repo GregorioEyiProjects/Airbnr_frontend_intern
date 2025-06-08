@@ -1,6 +1,6 @@
 # Airbnbr
 
-A new Flutter project inspired by Airbnb.
+A Flutter project inspired by Airbnb.
 
 ## Overview
 
