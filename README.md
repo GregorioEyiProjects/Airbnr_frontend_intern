@@ -4,8 +4,7 @@ A Flutter project inspired by Airbnb.
 
 ## Overview
 
-This project is a cross-platform mobile and web application built with Flutter. It allows users to browse, favorite, and reserve rooms, with authentication and persistent storage using ObjectBox.
-
+This project is a cross-platform mobile and web application built with Flutter. 
 ## Airbnb replica
 ![Home page](./screenshots/airbnb.jpeg)
 
